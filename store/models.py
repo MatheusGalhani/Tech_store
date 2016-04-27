@@ -39,6 +39,7 @@ class Produto(models.Model):
     descricao_produto = models.TextField()
     preco_produto = models.DecimalField(max_digits=15, decimal_places=2)
     qntd_produto = models.IntegerField()
+    imagem_produto = models.FileField(null=True, blank=True)	
     def __str__(self):
     	return self.nome_produto
 
