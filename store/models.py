@@ -39,6 +39,8 @@ class Produto(models.Model):
     descricao_produto = models.TextField()
     preco_produto = models.DecimalField(max_digits=15, decimal_places=2)
     qntd_produto = models.IntegerField()
+    def __str__(self):
+    	return self.nome_produto
 
 
 class Contato(models.Model):
@@ -51,3 +53,5 @@ class Contato(models.Model):
 	contato_estado = models.CharField(choices= ESTADO_CHOICES, max_length=200)
 	contato_cidade = models.CharField(max_length=200)
 	contato_endereco = models.CharField(max_length=400)
+	def __str__(self):
+		return self.contato_nome
