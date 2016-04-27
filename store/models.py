@@ -43,6 +43,7 @@ CATEGORIA_CHOICES = (
 	(u'smartphone', u'Smartphone'),
 	(u'tablet', u'Tablet'),
 	(u'teclado', u'Teclado'),
+	(u'televisao', u'Televisão'),
 )
 
 
