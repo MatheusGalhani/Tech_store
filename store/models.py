@@ -46,7 +46,7 @@ def __str__(self):
 
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)
-	nome = models.CharField(max_length=200)
+	nome_completo = models.CharField(max_length=200)
 	email = models.EmailField(max_length=250)
 	data_nascimento = models.DateField()
 	telefone_de_contato = models.IntegerField()

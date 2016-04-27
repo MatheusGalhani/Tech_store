@@ -11,10 +11,24 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Products',
+            name='Contato',
+            fields=[
+                ('id_contato', models.AutoField(primary_key=True, serialize=False)),
+                ('nome_completo', models.CharField(max_length=200)),
+                ('email', models.EmailField(max_length=250)),
+                ('data_nascimento', models.DateField()),
+                ('telefone_de_contato', models.IntegerField()),
+                ('cpf', models.IntegerField()),
+                ('estado', models.CharField(max_length=200, choices=[('acre', 'Acre'), ('alagoas', 'Alagoas'), ('amapá', 'Amapá'), ('amazonas', 'Amazonas'), ('bahia', 'Bahia'), ('ceará', 'Ceará'), ('distrito federal', 'Distrito Federal'), ('espírito santo', 'Espírito Santo'), ('goiás', 'Goiás'), ('maranhão', 'Maranhão'), ('mato grosso', 'Mato Grosso'), ('mato grosso do sul', 'Mato Grosso do Sul'), ('minas gerais', 'Minas Gerais'), ('pará', 'Pará'), ('paraíba', 'Paraíba'), ('paraná', 'Paraná'), ('pernambuco', 'Pernambuco'), ('piauí', 'Piauí'), ('rio de janeiro', 'Rio de Janeiro'), ('rio grande do norte', 'Rio Grande do Norte'), ('rio grande do sul', 'Rio Grande do Sul'), ('rondônia', 'Rondônia'), ('roraima', 'Roraima'), ('santa catarina', 'Santa Catarina'), ('são paulo', 'São Paulo'), ('sergipe', 'Sergipe'), ('tocantins', 'Tocantins')])),
+                ('cidade', models.CharField(max_length=200)),
+                ('endereco', models.CharField(max_length=400)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Produto',
             fields=[
                 ('id_produto', models.AutoField(primary_key=True, serialize=False)),
-                ('nome_produto', models.CharField(max_length=100)),
+                ('nome_produto', models.CharField(max_length=160)),
                 ('descricao_produto', models.TextField()),
                 ('preco_produto', models.DecimalField(max_digits=15, decimal_places=2)),
                 ('qntd_produto', models.IntegerField()),

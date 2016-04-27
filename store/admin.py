@@ -13,9 +13,9 @@ class ProdutoAdmin(admin.ModelAdmin):
 class ContatoAdmin(admin.ModelAdmin):
     model = Contato
     #list_display mostra nome do campo na coluna
-    list_display = ['id_contato','nome','email','cpf']
+    list_display = ['id_contato','nome_completo','email','cpf']
     list_filter = ['cpf']
-    search_fields = ['nome']
+    search_fields = ['nome_completo']
     save_on_top = False
 
 # Register your models here.
