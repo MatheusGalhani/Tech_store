@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-	#My choices
+#My choices
 ESTADO_CHOICES = (
 	(u'acre', u'Acre'),
 	(u'alagoas', u'Alagoas'),
@@ -32,16 +32,31 @@ ESTADO_CHOICES = (
 	(u'tocantins', u'Tocantins'),
 )
 
+CATEGORIA_CHOICES = (
+	(u'adaptador', u'Adaptador'),
+	(u'desktop', u'Desktop'),
+	(u'hardware', u'Hardware'),
+	(u'impressora', u'Impressora'),
+	(u'mouse', u'Mouse'),
+	(u'notebook', u'Notebook'),
+	(u'perifericos', u'Periféricos'),
+	(u'smartphone', u'Smartphone'),
+	(u'tablet', u'Tablet'),
+	(u'teclado', u'Teclado'),
+)
+
+
 # Create your models here.
 class Produto(models.Model):
-    id_produto = models.AutoField(primary_key=True)
-    nome_produto = models.CharField(max_length=160)
-    descricao_produto = models.TextField()
-    preco_produto = models.DecimalField(max_digits=15, decimal_places=2)
-    qntd_produto = models.IntegerField()
-    imagem_produto = models.FileField(null=True, blank=True)	
-    def __str__(self):
-    	return self.nome_produto
+	id_produto = models.AutoField(primary_key=True)
+	nome_produto = models.CharField(max_length=160)
+	descricao_produto = models.TextField()
+	imagem_produto = models.FileField(null=True, blank=True)
+	categoria_produto = models.CharField(choices= CATEGORIA_CHOICES, max_length=200)
+	preco_produto = models.DecimalField(max_digits=15, decimal_places=2)
+	qntd_produto = models.IntegerField()	
+	def __str__(self):
+		return self.nome_produto
 
 
 class Contato(models.Model):
