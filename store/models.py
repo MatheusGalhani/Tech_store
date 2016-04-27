@@ -41,19 +41,13 @@ class Produto(models.Model):
     qntd_produto = models.IntegerField()
 
 
-def __str__(self):
-    return self.nome_produto
-
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)
-	nome_completo = models.CharField(max_length=200)
-	email = models.EmailField(max_length=250)
+	contato_nome = models.CharField(max_length=200)
+	contato_email = models.EmailField(max_length=250)
 	data_nascimento = models.DateField()
 	telefone_de_contato = models.IntegerField()
-	cpf = models.IntegerField()
-	estado = models.CharField(choices= ESTADO_CHOICES, max_length=200)
-	cidade = models.CharField(max_length=200)
-	endereco = models.CharField(max_length=400)
-
-def __str__(self):
-    return self.nome_contato
+	cpf_contato = models.IntegerField()
+	contato_estado = models.CharField(choices= ESTADO_CHOICES, max_length=200)
+	contato_cidade = models.CharField(max_length=200)
+	contato_endereco = models.CharField(max_length=400)

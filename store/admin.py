@@ -10,14 +10,15 @@ class ProdutoAdmin(admin.ModelAdmin):
     search_fields = ['nome_produto']
     save_on_top = False
 
+admin.site.register(Produto, ProdutoAdmin)
+
 class ContatoAdmin(admin.ModelAdmin):
     model = Contato
     #list_display mostra nome do campo na coluna
-    list_display = ['id_contato','nome_completo','email','cpf']
-    list_filter = ['cpf']
-    search_fields = ['nome_completo']
+    list_display = ['id_contato','contato_nome','contato_email','cpf_contato']
+    list_filter = ['cpf_contato']
+    search_fields = ['contato_nome']
     save_on_top = False
 
 # Register your models here.
-admin.site.register(Produto, ProdutoAdmin)
 admin.site.register(Contato, ContatoAdmin)
