@@ -22,9 +22,8 @@
 	        <div class="col-md-8">
 	            {% for post in posts %}
 			    <div class="post">
-			        <h1><a href="">{{ post.nome_produto }}</a></h1>
+			        <h1><a href="/media/{{post.imagem_produto}}">{{ post.nome_produto }}</a></h1>
 			        <p>{{ post.descricao_produto|linebreaks }}</p>
-			        <p><a href="/media/{{post.imagem_produto}}">{{post.categoria_produto}}</a></p>
 			    </div>
 				{% endfor %}
 	        </div>
