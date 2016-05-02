@@ -55,18 +55,18 @@ class Produto(models.Model):
 	imagem_produto = models.FileField(null=True, blank=True)
 	categoria_produto = models.CharField(choices= CATEGORIA_CHOICES, max_length=200)
 	preco_produto = models.DecimalField(max_digits=15, decimal_places=2)
-	qntd_produto = models.IntegerField()	
+	qntd_produto = models.IntegerField()
 	def __str__(self):
 		return self.nome_produto
 
 
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)
-	contato_nome = models.CharField(max_length=200, unique=True)
-	contato_email = models.EmailField(max_length=250)
+	contato_nome = models.CharField(max_length=200)
+	contato_email = models.EmailField(max_length=250, unique=True)
 	data_nascimento = models.DateField()
 	telefone_de_contato = models.CharField(max_length=30)
-	cpf_contato = models.IntegerField(unique=True)
+	cpf_contato = models.CharField(max_length=30,unique=True)
 	contato_estado = models.CharField(choices= ESTADO_CHOICES, max_length=200)
 	contato_cidade = models.CharField(max_length=200)
 	contato_endereco = models.CharField(max_length=400)

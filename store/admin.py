@@ -16,7 +16,7 @@ class ContatoAdmin(admin.ModelAdmin):
     model = Contato
     #list_display mostra nome do campo na coluna
     list_display = ['id_contato','contato_nome','contato_email','cpf_contato']
-    list_filter = ['cpf_contato']
+    list_filter = ['contato_email','cpf_contato']
     search_fields = ['contato_nome']
     save_on_top = False
 
