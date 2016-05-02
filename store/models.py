@@ -52,23 +52,23 @@ class Produto(models.Model):
 	id_produto = models.AutoField(primary_key=True)
 	nome_produto = models.CharField(max_length=160)
 	descricao_produto = models.TextField()
-	imagem_produto = models.FileField(null=True, blank=True)
-	categoria_produto = models.CharField(choices= CATEGORIA_CHOICES, max_length=200)
-	preco_produto = models.DecimalField(max_digits=15, decimal_places=2)
-	qntd_produto = models.IntegerField()
+	imagem_produto = models.FileField(null=True, blank=True, verbose_name=u'Foto do produto')
+	categoria_produto = models.CharField(choices= CATEGORIA_CHOICES, max_length=200, verbose_name=u'Categoria')
+	preco_produto = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço do produto')
+	qntd_produto = models.IntegerField(verbose_name=u'Quantidade de estoque')
 	def __str__(self):
 		return self.nome_produto
 
 
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)
-	contato_nome = models.CharField(max_length=200)
-	contato_email = models.EmailField(max_length=250, unique=True)
+	contato_nome = models.CharField(max_length=200,verbose_name=u'Nome')
+	contato_email = models.EmailField(max_length=250, unique=True, verbose_name=u'Email')
 	data_nascimento = models.DateField()
 	telefone_de_contato = models.CharField(max_length=30)
-	cpf_contato = models.CharField(max_length=30,unique=True)
-	contato_estado = models.CharField(choices= ESTADO_CHOICES, max_length=200)
-	contato_cidade = models.CharField(max_length=200)
-	contato_endereco = models.CharField(max_length=400)
+	cpf_contato = models.CharField(max_length=30,unique=True,verbose_name=u'CPF')
+	contato_estado = models.CharField(choices= ESTADO_CHOICES, max_length=200, verbose_name=u'Estado')
+	contato_cidade = models.CharField(max_length=200, verbose_name=u'Cidade')
+	contato_endereco = models.CharField(max_length=400, verbose_name=u'Endereço')
 	def __str__(self):
 		return self.contato_nome
