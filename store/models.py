@@ -62,11 +62,11 @@ class Produto(models.Model):
 
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)
-	contato_nome = models.CharField(max_length=200)
+	contato_nome = models.CharField(max_length=200, unique=True)
 	contato_email = models.EmailField(max_length=250)
 	data_nascimento = models.DateField()
-	telefone_de_contato = models.IntegerField()
-	cpf_contato = models.IntegerField()
+	telefone_de_contato = models.CharField(max_length=30)
+	cpf_contato = models.IntegerField(unique=True)
 	contato_estado = models.CharField(choices= ESTADO_CHOICES, max_length=200)
 	contato_cidade = models.CharField(max_length=200)
 	contato_endereco = models.CharField(max_length=400)
