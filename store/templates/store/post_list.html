@@ -1,12 +1,12 @@
 {% load staticfiles %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Tech Store</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Tech Store</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
 	<link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
@@ -15,22 +15,23 @@
 </head>
 
 <body>
-    <div class="page-header">
-	    <h1><a href="/">Tech Store</a></h1>
+	<div class="page-header">
+		<h1><a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+		 width="20%" height="20%" /></a></h1>
 	</div>
 	
 	<div class="content container">
-	    <div class="row">
-	        <div class="col-md-8">
-	            {% for post in posts %}
-			    <div class="post">
-			        <h1><a href="">{{ post.nome_produto }}</a></h1>
-			        <p><img src="/media/{{post.imagem_produto}}" width="40%" height="40%" title={{ post.nome_produto }} border="1"/></p>
-			        <p>{{ post.descricao_produto|linebreaks }}</p>
-			    </div>
+		<div class="row">
+			<div class="col-md-8">
+				{% for post in posts %}
+				<div class="post">
+					<h1><a href="">{{ post.nome_produto }}</a></h1>
+					<p><img src="/media/{{post.imagem_produto}}" width="40%" height="40%" title={{ post.nome_produto }} border="1"/></p>
+					<p>{{ post.descricao_produto|linebreaks }}</p>
+				</div>
 				{% endfor %}
-	        </div>
-	    </div>
+			</div>
+		</div>
 	</div>
 </body>
 
