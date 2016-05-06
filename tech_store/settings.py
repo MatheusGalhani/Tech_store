@@ -40,6 +40,8 @@ INSTALLED_APPS = (
     'store',
 )
 
+LOGIN_URL = '/login/'
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -105,4 +107,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'tech_store/store/static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'tech_store/media_cnd')
+
 

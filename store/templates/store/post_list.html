@@ -18,14 +18,15 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			
-			<form id="signin" class="navbar-form navbar-top-right" role="form">
+			<form id="signin" class="navbar-form navbar-top-right" role="form" method='POST' action="/home/">
+			{% csrf_token %}
 				<div class="input-group">
 					<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
 						width="50%" height="50%" /></a>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input id="email" type="text" class="form-control" name="email" value="" placeholder="Email Address">                                        
+						<input id="username" type="text" class="form-control" name="username" value="" placeholder="Email Address">                                        
 					</div>
 
 					<div class="input-group">
