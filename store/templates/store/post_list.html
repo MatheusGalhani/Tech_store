@@ -16,23 +16,41 @@
 
 <body>
 	<div class="page-header">
-		<h1><a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
-		 width="20%" height="20%" /></a></h1>
-	</div>
-	
-	<div class="content container">
-		<div class="row">
-			<div class="col-md-8">
-				{% for post in posts %}
-				<div class="post">
-					<h1><a href="">{{ post.nome_produto }}</a></h1>
-					<p><img src="/media/{{post.imagem_produto}}" width="40%" height="40%" title={{ post.nome_produto }} border="1"/></p>
-					<p>{{ post.descricao_produto|linebreaks }}</p>
-				</div>
-				{% endfor %}
+		<div class="container-fluid">
+			
+			<form id="signin" class="navbar-form navbar-top-right" role="form">
+				<div class="input-group">
+					<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+						width="50%" height="50%" /></a>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						<input id="email" type="text" class="form-control" name="email" value="" placeholder="Email Address">                                        
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						<input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                        
+					</div>
+
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
 			</div>
 		</div>
-	</div>
-</body>
 
-</html>
+		<div class="content container">
+			<div class="row">
+				<div class="col-md-8">
+					{% for post in posts %}
+					<div class="post">
+						<h1><a href="">{{ post.nome_produto }}</a></h1>
+						<p><img src="/media/{{post.imagem_produto}}" width="40%" height="40%" title={{ post.nome_produto }} border="1"/></p>
+						<p>{{ post.descricao_produto|linebreaks }}</p>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</body>
+
+	</html>
