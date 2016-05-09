@@ -13,9 +13,7 @@
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
 </head>
-
 <body>
-	
 	<div class="page-header">
 		<div class="container-fluid">
 
@@ -24,37 +22,24 @@
 					<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
 						width="50%" height="50%" /></a>
 					</div>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input id="username" type="text" class="form-control" name="username" value="" placeholder="Username">                                        
-					</div>
-
-					<div class="input-group">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-						<input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                        
-					</div>
-
-					<button type="submit" class="btn btn-primary">Login</button>
 				</form>
 			</div>
 		</div>
 
-		{% for post in posts %}
-		<div class="col-md-2">
-			<div class="productbox">
-				<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}>
-				<div class="producttitle">
-					<a href="{% url 'store.views.Product' pk=post.pk %}">{{ post.nome_produto }}
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<div class="hero-unit center">
+						<h1>Page Not Found <small><font face="Tahoma" color="red">Error 404</font></small></h1>
+						<br />
+						<p>The page you requested could not be found, either contact your webmaster or try again. Use your browsers <b>Back</b> button to navigate to the page you have prevously come from</p>
+						<p><b>Or you could just press this neat little button:</b></p>
+						<a href="/" class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Take Me Home</a>
 					</div>
-					<div class="productprice">
-						<div class="pull-right">
-							<a href="#" class="btn btn-primary btm-sm" role="button">Add to <span class="glyphicon glyphicon-shopping-cart"></span></a>
-						</div>
-						<div class="pricetext"> <p> R$ {{ post.preco_produto }} </p> </div>
-					</div>
+					<br />
 				</div>
 			</div>
-			{% endfor %}
-		</body>
+		</div>
 
-		</html>
+	</body>
+	</html>

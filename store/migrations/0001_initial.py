@@ -2,26 +2,23 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+from django.conf import settings
+import django.utils.timezone
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Contato',
+            name='Carrinho',
             fields=[
-                ('id_contato', models.AutoField(primary_key=True, serialize=False)),
-                ('nome_contato', models.CharField(max_length=200)),
-                ('email', models.EmailField(max_length=250)),
-                ('data_nascimento', models.DateField()),
-                ('telefone_de_contato', models.IntegerField()),
-                ('cpf', models.IntegerField()),
-                ('estado', models.CharField(choices=[('acre', 'Acre'), ('alagoas', 'Alagoas'), ('amapá', 'Amapá'), ('amazonas', 'Amazonas'), ('bahia', 'Bahia'), ('ceará', 'Ceará'), ('distrito federal', 'Distrito Federal'), ('espírito santo', 'Espírito Santo'), ('goiás', 'Goiás'), ('maranhão', 'Maranhão'), ('mato grosso', 'Mato Grosso'), ('mato grosso do sul', 'Mato Grosso do Sul'), ('minas gerais', 'Minas Gerais'), ('pará', 'Pará'), ('paraíba', 'Paraíba'), ('paraná', 'Paraná'), ('pernambuco', 'Pernambuco'), ('piauí', 'Piauí'), ('rio de janeiro', 'Rio de Janeiro'), ('rio grande do norte', 'Rio Grande do Norte'), ('rio grande do sul', 'Rio Grande do Sul'), ('rondônia', 'Rondônia'), ('roraima', 'Roraima'), ('santa catarina', 'Santa Catarina'), ('são paulo', 'São Paulo'), ('sergipe', 'Sergipe'), ('tocantins', 'Tocantins')], max_length=200)),
-                ('cidade', models.CharField(max_length=200)),
-                ('endereco', models.CharField(max_length=400)),
+                ('id_carrinho', models.AutoField(primary_key=True, serialize=False)),
+                ('qntd_produtos', models.IntegerField(verbose_name='Quantidade de produtos')),
+                ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
             ],
         ),
         migrations.CreateModel(
@@ -30,8 +27,20 @@ class Migration(migrations.Migration):
                 ('id_produto', models.AutoField(primary_key=True, serialize=False)),
                 ('nome_produto', models.CharField(max_length=160)),
                 ('descricao_produto', models.TextField()),
-                ('preco_produto', models.DecimalField(decimal_places=2, max_digits=15)),
-                ('qntd_produto', models.IntegerField()),
+                ('imagem_produto', models.FileField(verbose_name='Foto do produto', upload_to='', null=True)),
+                ('categoria_produto', models.CharField(verbose_name='Categoria', max_length=200, choices=[('adaptador', 'Adaptador'), ('desktop', 'Desktop'), ('hardware', 'Hardware'), ('impressora', 'Impressora'), ('mouse', 'Mouse'), ('notebook', 'Notebook'), ('perifericos', 'Periféricos'), ('smartphone', 'Smartphone'), ('tablet', 'Tablet'), ('teclado', 'Teclado'), ('televisao', 'Televisão')])),
+                ('preco_produto', models.DecimalField(verbose_name='Preço do produto', max_digits=15, decimal_places=2)),
+                ('qntd_produto', models.IntegerField(verbose_name='Quantidade de estoque')),
             ],
+        ),
+        migrations.AddField(
+            model_name='carrinho',
+            name='produto_compra',
+            field=models.ForeignKey(to='store.Produto'),
+        ),
+        migrations.AddField(
+            model_name='carrinho',
+            name='usuario_compra',
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
         ),
     ]

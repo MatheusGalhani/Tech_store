@@ -1,0 +1,57 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Tech Store</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
+	<link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+	<link rel="icon" href="/media/icone.png" type="image/x-icon">
+	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
+</head>
+
+<body>
+{% block content %}
+    <style>
+        form {
+            width: 50%;
+            margin: 100px auto;
+        }
+        .centered {
+            text-align: center;
+            width: 100%;
+        }
+        ul.errorlist {
+            list-style-type: none;
+        }
+    </style>	
+	<form method="post" action=".?next={{ redirect_to }}" class="panel panel-default">{% csrf_token %}
+		<fieldset class="panel-body">
+			<div class="centered">
+				<img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="25%" height="25%" />
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input id="username" type="text" class="form-control" name="username" value="" placeholder="Username">                                        
+			</div>
+
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+				<input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                        
+			</div>
+			<button type="submit" class="btn btn-primary" style="width: 100%">Login</button>
+			<div class="error-notice">
+				<div class="oaerror danger">
+					<strong>Error</strong> - You provided a wrong username/password
+				</div>
+			</div>
+		</fieldset>
+	</form>
+	{% endblock %}
+</body>
+
+</html>
