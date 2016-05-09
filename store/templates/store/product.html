@@ -17,50 +17,28 @@
 <body>
 	<div class="page-header">
 		<div class="container-fluid">
-			{% if user.is_authenticated %}
 			<form class="navbar-form navbar-top-right" role="form" action="/">
 				<div class="input-group">
-					<a href="/home/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+					<a href="{{ request.META.HTTP_REFERER }}"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
 						width="50%" height="50%" /></a>
 
 					</div>
-					<a href="/logout/"><button class="btn btn-primary">Logout</button></a>
-
 				</form>
-				{% else %}
-				<form class="navbar-form navbar-top-right" role="form" action ="/login/?next={{ request.path }}">
-					<div class="input-group">
-						<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
-							width="50%" height="50%" /></a>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							<input type="text" class="form-control" name="email" value="" placeholder="Username">                                        
-						</div>
-
-						<div class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							<input type="password" class="form-control" name="password" value="" placeholder="Password">                                        
-						</div>
-
-						<a href="/login/?next={{ request.path }}"><button href="/login/?next={{ request.path }}" type="submit" class="btn btn-primary">Login</button></a>
-					</form>
-					{% endif %}
-				</div>
 			</div>
+		</div>
 
-			<div class="content container">
-				<div class="row">
-					<div class="col-md-8">
-						<div class="post">
-							<h1><a href="">{{ post.nome_produto }}</a></h1>
-							<p><img src="/media/{{post.imagem_produto}}" width="40%" height="40%" title={{ post.nome_produto }} border="1"/></p>
-							<p>{{ post.descricao_produto|linebreaks }}</p>
-						</div>
+		<div class="content container">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="post">
+						<h1><a href="">{{ post.nome_produto }}</a></h1>
+						<p><img src="/media/{{post.imagem_produto}}" width="40%" height="40%" title={{ post.nome_produto }} border="1"/></p>
+						<p>{{ post.descricao_produto|linebreaks }}</p>
 					</div>
 				</div>
 			</div>
+		</div>
 
-		</body>
+	</body>
 
-		</html>
+	</html>
