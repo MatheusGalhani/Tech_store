@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 #My choices
 ESTADO_CHOICES = (
@@ -85,12 +86,14 @@ class Carrinho(models.Model):
 		return self.usuario_compra
 
 class Contato(models.Model):
-	author = models.ForeignKey('auth.User')
+	id_contato = models.AutoField(primary_key=True)
+	author_usuario = models.ForeignKey('auth.User', verbose_name=u'Usuario')
 	nome_completo = models.CharField(max_length=260)
 	cpf_contato = models.CharField(max_length=50, unique=True, verbose_name=u'CPF')
 	telefone_contato = models.CharField(max_length=60)
-	email_contato = models.CharField(max_length = 100, unique=True, verbose_name=u'EMAIL')
+	email_contato = models.EmailField(max_length = 100, unique=True, verbose_name=u'EMAIL')
 	data_nascimento = models.DateField()
 	estado_pais =  models.CharField(choices= ESTADO_CHOICES, max_length=200, verbose_name=u'Estado')
 	cidade_estado = models.CharField(max_length=200, verbose_name=u'Cidade')
 	endereco_completo = models.CharField(max_length=400, verbose_name=u'Endereço Completo')
+	cep_endereco = models.CharField(max_length=50, verbose_name=u'CEP')

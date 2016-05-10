@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Produto, Pagamento, Statu 
+from .models import Produto, Pagamento, Statu, Contato
 
 class ProdutoAdmin(admin.ModelAdmin):
     model = Produto
@@ -29,6 +29,14 @@ class StatuAdmin(admin.ModelAdmin):
     search_fields = ['status_info']
     save_on_top = False
 
+class ContatoAdmin(admin.ModelAdmin):
+	model = Contato
+	list_display = ['id_contato','nome_completo', 'author_usuario', 'cpf_contato', 'email_contato']
+	list_filter = ['author_usuario', 'cpf_contato', 'email_contato']
+	search_fields = ['nome_completo']
+	save_on_top = False
+
 admin.site.register(Pagamento, PagamentoAdmin)
 admin.site.register(Produto, ProdutoAdmin)
 admin.site.register(Statu, StatuAdmin)
+admin.site.register(Contato, ContatoAdmin)
