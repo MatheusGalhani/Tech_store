@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^home/$', views.Home),
     url(r'^product/(?P<pk>[0-9]+)/', views.Product),
     url(r'^add_to_car/$', views.Buy),
-
+    url(r'^reset_password/$', views.Reset)
 ]
