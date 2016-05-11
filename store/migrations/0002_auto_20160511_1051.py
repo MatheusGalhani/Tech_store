@@ -2,24 +2,24 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-from django.conf import settings
+import store.models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('store', '0005_auto_20160510_1049'),
+        ('store', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='contato',
-            name='author_usuario',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='Usuario'),
+            name='cep_endereco',
+            field=models.CharField(max_length=50, verbose_name='CEP', validators=[store.models.validate_cep]),
         ),
         migrations.AlterField(
             model_name='contato',
-            name='email_contato',
-            field=models.EmailField(max_length=100, unique=True, verbose_name='EMAIL'),
+            name='complemento_endereco',
+            field=models.CharField(null=True, max_length=400, verbose_name='Complemento', blank=True),
         ),
     ]

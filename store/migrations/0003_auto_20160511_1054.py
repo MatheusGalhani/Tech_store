@@ -8,13 +8,13 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('store', '0001_initial'),
+        ('store', '0002_auto_20160511_1051'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='contato',
-            name='author',
-            field=models.ForeignKey(unique=True, to=settings.AUTH_USER_MODEL, verbose_name='Usuario'),
+            name='author_usuario',
+            field=models.ForeignKey(unique=True, verbose_name='Usuario', to=settings.AUTH_USER_MODEL),
         ),
     ]

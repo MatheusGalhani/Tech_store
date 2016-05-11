@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
+from store.base import CPF, CEP
 
 #My choices
 ESTADO_CHOICES = (
@@ -47,6 +49,21 @@ CATEGORIA_CHOICES = (
 	(u'televisao', u'Televisão'),
 )
 
+#My Validator
+def validate_cpf(value):
+    if not CPF.validate(value):
+        raise ValidationError(
+            _('%(value)s is not a valid CPF "EXAMPLE: 123.456.789-11"'),
+            params={'value': value},
+        )
+
+def validate_cep(value):
+    if not CEP.validate(value):
+        raise ValidationError(
+            _('%(value)s is not a valid CEP "EXAMPLE: 14810-142"'),
+            params={'value': value},
+        )
+
 
 # Create your models here.
 class Produto(models.Model):
@@ -87,13 +104,16 @@ class Carrinho(models.Model):
 
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)
-	author_usuario = models.ForeignKey('auth.User', verbose_name=u'Usuario')
+	author_usuario = models.ForeignKey('auth.User', verbose_name=u'Usuario', unique=True,)
 	nome_completo = models.CharField(max_length=260)
-	cpf_contato = models.CharField(max_length=50, unique=True, verbose_name=u'CPF')
+	cpf_contato = models.CharField(unique=True, verbose_name=u'CPF', max_length=14, validators=[validate_cpf])
 	telefone_contato = models.CharField(max_length=60)
 	email_contato = models.EmailField(max_length = 100, unique=True, verbose_name=u'EMAIL')
 	data_nascimento = models.DateField()
 	estado_pais =  models.CharField(choices= ESTADO_CHOICES, max_length=200, verbose_name=u'Estado')
 	cidade_estado = models.CharField(max_length=200, verbose_name=u'Cidade')
 	endereco_completo = models.CharField(max_length=400, verbose_name=u'Endereço Completo')
-	cep_endereco = models.CharField(max_length=50, verbose_name=u'CEP')
+	numero_casa = models.IntegerField(verbose_name=u'Número')
+	bairro_endereco = models.CharField(max_length=400, verbose_name=u'Bairro')
+	complemento_endereco = models.CharField(blank=True,null=True, max_length=400, verbose_name=u'Complemento')
+	cep_endereco = models.CharField(max_length=50, verbose_name=u'CEP', validators=[validate_cep])
