@@ -117,3 +117,5 @@ class Contato(models.Model):
 	bairro_endereco = models.CharField(max_length=400, verbose_name=u'Bairro')
 	complemento_endereco = models.CharField(blank=True,null=True, max_length=400, verbose_name=u'Complemento')
 	cep_endereco = models.CharField(max_length=50, verbose_name=u'CEP', validators=[validate_cep])
+	def __str__(self):
+		return self.cpf_contato
