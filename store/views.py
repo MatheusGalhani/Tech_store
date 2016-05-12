@@ -44,24 +44,17 @@ def Buy(request):
 
 def Reset(request):
     if request.method == "POST":
-        username = request.POST['username']
-        user = authenticate(username=username)
-
-        if user is not None:
-            if user.is_active:
-                logout(request)
-                subject = request.POST.get('subject', '')
-                message = request.POST.get('message', '')
-                from_email = request.POST.get('from_email', '')
-                if subject and message and from_email:
-                    try:
-                        send_mail(subject, message, from_email, ['admin@example.com'])
-                    except BadHeaderError:
-                        return HttpResponse('Invalid header found.')
-                    return HttpResponseRedirect('/contact/thanks/')
-                else:
-                    # In reality we'd use a form class
-                    # to get proper validation errors.
-                    return HttpResponse('Make sure all fields are entered and valid.')
+        subject = request.POST.get('subject', '')
+        message = request.POST.get('message', '')
+        from_email = request.POST.get('from_email', '')
+        return HttpResponse(from_email)
+        if subject and message and from_email:
+            try:
+                send_mail(subject, message, from_email, ['admin@example.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return HttpResponseRedirect('/contact/thanks/')
+        else:
+            return HttpResponse('Make sure all fields are entered and valid.')
 
     return render(request, "store/reset_password.html", {})
