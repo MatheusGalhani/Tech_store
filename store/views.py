@@ -25,6 +25,15 @@ def Login(request):
     posts = Produto.objects.order_by('id_produto')        
     return render(request, "store/post_list.html", {'posts': posts, 'redirect_to': next})
 
+def Search(request):
+    if request.method == "GET":
+        search = request.GET['search']
+        posts = Produto.objects.filter(nome_produto__contains = search)
+        return render(request, "store/search.html", {'posts': posts})
+
+    posts = Produto.objects.order_by('id_produto')
+    return render(request, "store/search.html", {'posts': posts})
+
 def Logout(request):
     logout(request)
     return HttpResponseRedirect('/')
@@ -43,4 +52,5 @@ def Buy(request):
     return render(request, "store/store.html", {'posts': posts})
 
 def Reset(request):
+    #contatotechstore@hotmail.com
     return render(request, "store/reset_password.html", {})

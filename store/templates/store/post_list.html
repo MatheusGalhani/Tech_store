@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
 	<link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
@@ -37,6 +39,14 @@
 					<button type="submit" class="btn btn-primary">Login</button>
 					<a href="/reset_password/"><font color=#f2f2f2>ESQUECEU SUA SENHA?</font></a>
 				</form>
+				<form class="search-form" method="get" action="search/">
+					<div class="form-group has-feedback">
+						<label for="search" class="sr-only">Search</label>
+						<input type="text" class="form-control" name="search" id="search" placeholder="search">
+						<span class="glyphicon glyphicon-search form-control-feedback"></span>
+					</div>
+				</form>
+				
 			</div>
 
 		</div>
