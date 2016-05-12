@@ -24,9 +24,11 @@
 			<form class="navbar-form navbar-top-right" role="form" action="../logout/">
 				<div class="input-group">
 					<a href="/home/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
-						width="50%" height="50%" /></a>						
-						<a href="../logout/"><button class="btn btn-primary">Logout</button></a>
+						width="50%" height="50%" /></a>
+
 					</div>
+					<a href="../logout/"><button class="btn btn-primary">Logout</button></a>
+
 				</form>
 				<form class="search-form" method="get" action="../search/">
 					<div class="form-group has-feedback">
@@ -36,7 +38,7 @@
 					</div>
 				</form>
 				{% else %}
-				<form class="navbar-form navbar-top-right" role="form" action="/">
+				<form class="navbar-form navbar-top-right" role="form" action ="/login/">
 					<div class="input-group">
 						<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
 							width="50%" height="50%" /></a>
