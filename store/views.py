@@ -54,3 +54,6 @@ def Buy(request):
 def Reset(request):
     #contatotechstore@hotmail.com
     return render(request, "store/reset_password.html", {})
+
+def custom_404(request):
+    return render(request, 'store/error_page_404.html', {})

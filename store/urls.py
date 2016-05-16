@@ -11,3 +11,5 @@ urlpatterns = [
     url(r'^reset_password/$', views.Reset),
     url(r'^search/$', views.Search),
 ]
+
+handler404 = 'views.custom_404'
