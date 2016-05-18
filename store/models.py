@@ -70,7 +70,7 @@ class Produto(models.Model):
 	id_produto = models.AutoField(primary_key=True)
 	nome_produto = models.CharField(max_length=160)
 	descricao_produto = models.TextField()
-	imagem_produto = models.FileField(null=True, verbose_name=u'Foto do produto')
+	imagem_produto = models.FileField(verbose_name=u'Foto do produto')
 	categoria_produto = models.CharField(choices= CATEGORIA_CHOICES, max_length=200, verbose_name=u'Categoria')
 	preco_produto = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço da venda')
 	qntd_produto = models.IntegerField(verbose_name=u'Quantidade de estoque')

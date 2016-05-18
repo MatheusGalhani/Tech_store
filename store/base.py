@@ -36,9 +36,9 @@ class CEP(object):
     @classmethod
     def validate(cls, cep):
         """
-        Valida o CPF recebido
-            @param cpf: string - CPF a ser validado
-            @return: bool - se o CPF é válido ou não
+        Valida o CEP recebido
+            @param cep: string - CEP a ser validado
+            @return: bool - se o CEP é válido ou não
         """
 
         if not cep:

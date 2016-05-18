@@ -11,13 +11,13 @@
 	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
-	<link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
 </head>
 
 <body>
-	
 	<div class="page-header">
 		<div class="container-fluid">
 
@@ -51,23 +51,57 @@
 			</div>
 
 		</div>
+		<div id="wrapper">
+			<div class="cart-icon-top">
+			</div>
 
-		{% for post in posts %}
-		<div class="col-md-2">
-			<div class="productbox">
-				<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}>
-				<div class="producttitle">
-					<a href="{% url 'store.views.Product' pk=post.pk %}">{{ post.nome_produto }}
-					</div>
-					<div class="productprice">
-						<div class="pull-right">
-							<a href="#" class="btn btn-primary  btn-sm btn3d" role="button">Add to <span class="glyphicon glyphicon-shopping-cart"></span></a>
-						</div>
-						<div class="pricetext"> <p> R$ {{ post.preco_produto }} </p> </div>
-					</div>
+			<div class="cart-icon-bottom">
+			</div>
+			<div id="header">	
+				<ul>
+					<li><a href="/">HOME</a></li>
+					<li><a href="">SOBRE</a></li>
+					<li><a href="">SUPORTE</a></li>                                       
+				</ul>		
+			</div>
+			<div id="sidebar">
+				<h3>CATEGORIAS</h3>
+				<div class="checklist categories">
+					<ul>
+						<li><a href=""><span></span>Câmeras Digitais</a></li>
+						<li><a href=""><span></span>Desktop</a></li>
+						<li><a href=""><span></span>Hardware</a></li>
+						<li><a href=""><span></span>Impressora</a></li>
+						<li><a href=""><span></span>Notebook</a></li>
+						<li><a href=""><span></span>Periféricos</a></li>
+						<li><a href=""><span></span>Redes</a></li>
+						<li><a href=""><span></span>Smartphone</a></li>
+						<li><a href=""><span></span>Software</a></li>
+						<li><a href=""><span></span>Tablet</a></li>
+						<li><a href=""><span></span>Televisão</a></li>
+					</ul>
 				</div>
 			</div>
-			{% endfor %}
-		</body>
+			<div class="container-fluid">
+				{% for post in posts %}
+				<div class="col-md-2">
+					<div class="productbox">
+						<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
+						<div class="producttitle">
+						<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
+						</div>
+						<div class="productprice">
+							<div class="pull-right">
+								<a href="#" class="btn btn-primary  btn-sm btn3d" role="button">Add to <span class="glyphicon glyphicon-shopping-cart"></span></a>
+							</div>
+							<div class="pricetext"> <p> R$ {{ post.preco_produto }} </p> </div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
 
-		</html>
+	</body>
+
+	</html>
