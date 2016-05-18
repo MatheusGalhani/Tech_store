@@ -57,3 +57,47 @@ def Reset(request):
 
 def custom_404(request):
     return render(request, 'store/error_page_404.html', {})
+
+def cameras(request):
+    posts = Produto.objects.filter(categoria_produto = 'cameras')
+    return render(request, "store/store.html", {'posts': posts})
+
+def desktop(request):
+    posts = Produto.objects.filter(categoria_produto = 'desktop')
+    return render(request, "store/store.html", {'posts': posts})
+
+def hardware(request):
+    posts = Produto.objects.filter(categoria_produto = 'hardware')
+    return render(request, "store/store.html", {'posts': posts})
+
+def impressora(request):
+    posts = Produto.objects.filter(categoria_produto = 'impressora')
+    return render(request, "store/store.html", {'posts': posts})
+
+def notebook(request):
+    posts = Produto.objects.filter(categoria_produto = 'notebook')
+    return render(request, "store/store.html", {'posts': posts})
+
+def perifericos(request):
+    posts = Produto.objects.filter(categoria_produto = 'perifericos')
+    return render(request, "store/store.html", {'posts': posts})
+
+def redes(request):
+    posts = Produto.objects.filter(categoria_produto = 'redes')
+    return render(request, "store/store.html", {'posts': posts})
+
+def smartphone(request):
+    posts = Produto.objects.filter(categoria_produto = 'smartphone')
+    return render(request, "store/store.html", {'posts': posts})
+
+def software(request):
+    posts = Produto.objects.filter(categoria_produto = 'software')
+    return render(request, "store/store.html", {'posts': posts})
+
+def tablet(request):
+    posts = Produto.objects.filter(categoria_produto = 'tablet')
+    return render(request, "store/store.html", {'posts': posts})
+
+def televisao(request):
+    posts = Produto.objects.filter(categoria_produto = 'televisao')
+    return render(request, "store/store.html", {'posts': posts})
