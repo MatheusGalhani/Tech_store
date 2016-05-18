@@ -1,6 +1,9 @@
 body {
     padding-left: 15px;
 }
+small{
+    font-size: 9px;
+}
 
 .page-header {
     background-color: #0099ff;
