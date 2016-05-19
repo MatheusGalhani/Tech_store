@@ -84,6 +84,7 @@
 			</div>
 			<div class="container-fluid">
 				{% for post in posts %}
+				{% if post.qntd_produto > 0 %}
 				<div class="col-md-2">
 					<div class="productbox">
 						<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
@@ -98,6 +99,25 @@
 						</div>
 					</div>
 				</div>
+				{% else %}
+				<div class="col-md-2">
+					<div class="productbox2">
+						<div class="offer offer-radius offer-danger">
+							<div class="shape">
+								<div class="shape-text">
+									Sem estoque					
+								</div>
+							</div>
+							<div class="offer-content">
+								<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
+							</div>
+						</div>
+						<div class="producttitle">
+							<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
+						</div>
+					</div>
+				</div>
+				{% endif %}
 				{% endfor %}
 			</div>
 		</div>

@@ -20,14 +20,32 @@
     max-width: 200px;
 }
 
+.productbox2 {
+    background-color:#ffffff;
+    padding:10px;
+    margin:5px 0;
+    border: 1px solid #cfcfcf;
+    -moz-box-shadow: 2px 2px 4px 0px #cfcfcf;
+    -webkit-box-shadow: 2px 2px 4px 0px #cfcfcf;
+    -o-box-shadow: 2px 2px 4px 0px #cfcfcf;
+    box-shadow: 2px 2px 4px 0px #cfcfcf;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#cfcfcf, Direction=134, Strength=4);
+    width: 100%;
+
+}
+
+.productbox2 p{
+    height: 75px;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 260px;
+}
+
 .producttitle {
     font-weight:bold;
     font-size:1.2em;
     padding:5px 0 5px 0;
-}
-
-.producttext {
-
 }
 
 .productprice {
@@ -39,4 +57,28 @@
     font-weight:bold;
     font-size:1.4em;
 }
+
+.shape{    
+    border-style: solid; border-width: 0 70px 70px 0; float:right; height: 0px; width: 0px;
+    -webkit-transform: rotate(360deg);  
+    -moz-transform: rotate(360deg);  
+    -o-transform: rotate(360deg);  
+    transform: rotate(360deg); 
+}
+.shape-text{
+    color:#fff; font-size:12px; font-weight:bold; position:relative; right:-15px; top:-3px; white-space: nowrap;
+    -ms-transform:rotate(30deg); /* IE 9 */
+    -o-transform: rotate(360deg);  /* Opera 10.5 */
+    -webkit-transform:rotate(46deg); /* Safari and Chrome */
+    transform:rotate(46deg);
+}
+
+.offer-danger .shape{
+    border-color: transparent #d9534f transparent transparent;
+}
+
+.offer-content{
+    padding:0 20px 10px;
+}
+
 
