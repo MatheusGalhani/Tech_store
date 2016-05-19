@@ -1,0 +1,179 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Tech Store</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+	<link rel="icon" href="/media/icone.png" type="image/x-icon">
+	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
+</head>
+
+<body>
+	<div class="page-header">
+		<div class="container-fluid">
+			{% if user.is_authenticated %}
+			<form class="navbar-form navbar-top-right" role="form" action="../logout/">
+				<div class="input-group">
+					<a href="/home/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+						width="40%" height="40%" /></a>
+
+					</div>
+					<a href="../logout/"><button class="btn btn-primary  btn-sm btn3d">Logout</button></a>
+
+				</form>
+				<form class="search-form" method="get" action="../search/">
+					<div class="form-group has-feedback">
+						<label for="search" class="sr-only">Search</label>
+						<input type="text" class="form-control" name="search" id="search" placeholder="search">
+						<span class="glyphicon glyphicon-search form-control-feedback"></span>
+					</div>
+				</form>
+				{% else %}
+				<form class="navbar-form navbar-top-right" role="form" action ="/login/?next={{ request.path }}">{% csrf_token %}
+					<div class="input-group">
+						<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+							width="40%" height="40%" /></a>
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							<input type="text" class="form-control" name="email" value="" placeholder="Username">                                        
+						</div>
+
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input type="password" class="form-control" name="password" value="" placeholder="Password">                                        
+						</div>
+
+						<a href="/login/?next={{ request.path }}"><button href="/login/?next={{ request.path }}" type="submit" class="btn btn-primary  btn-sm btn3d">Login</button></a>
+					</form>
+					<form class="search-form" method="get" action="../search/">
+						<div class="form-group has-feedback">
+							<label for="search" class="sr-only">Search</label>
+							<input type="text" class="form-control" name="search" id="search" placeholder="search">
+							<span class="glyphicon glyphicon-search form-control-feedback"></span>
+						</div>
+					</form>
+					{% endif %}
+				</div>
+			</div>
+			<div id="wrapper">
+				<div class="cart-icon-top">
+				</div>
+
+				<div class="cart-icon-bottom">
+				</div>
+				<div id="header">	
+					<ul>
+						<li><a href="/">HOME</a></li>
+						<li><a href="">SOBRE</a></li>
+						<li><a href="">SUPORTE</a></li>                                       
+					</ul>		
+				</div>
+				<div id="sidebar">
+					<h3>CATEGORIAS</h3>
+					<div class="checklist categories">
+						<ul>
+							<li><a href="../cameras/"><span></span>Câmeras Digitais</a></li>
+							<li><a href="../desktop/"><span></span>Desktop</a></li>
+							<li><a href="../hardware/"><span></span>Hardware</a></li>
+							<li><a href="../impressora/"><span></span>Impressora</a></li>
+							<li><a href="../notebook/"><span></span>Notebook</a></li>
+							<li><a href="../perifericos/"><span></span>Periféricos</a></li>
+							<li><a href="../redes/"><span></span>Redes</a></li>
+							<li><a href="../smartphone/"><span></span>Smartphone</a></li>
+							<li><a href="../software/"><span></span>Software</a></li>
+							<li><a href="../tablet/"><span></span>Tablet</a></li>
+							<li><a href="../televisao/"><span></span>Televisão</a></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-12 col-md-10 col-md-offset-1">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Produto</th>
+										<th>Quantidade</th>
+										<th class="text-center">Preço</th>
+										<th class="text-center">Total</th>
+										<th> </th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for post in posts %}
+									<tr>
+										<td class="col-sm-8 col-md-6">
+											<div class="media">
+												<a class="thumbnail pull-left" href="#"> <img class="media-object" src="/media/{{post.imagem_produto}}" style="width: 72px; height: 72px;"> </a>
+												<div class="media-body">
+													<h4 class="media-heading">{{ post.nome_produto }}</h4>
+													<span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+												</div>
+											</div></td>
+											<td class="col-sm-1 col-md-1" style="text-align: center">
+												<input type="email" class="form-control" id="exampleInputEmail1" value="1">
+											</td>
+											<td class="col-sm-1 col-md-1 text-center"><strong>R$ {{ post.preco_produto }}</strong></td>
+											<td class="col-sm-1 col-md-1 text-center"><strong>XXXXXXXXXXXXX</strong></td>
+											<td class="col-sm-1 col-md-1">
+												<button type="button" class="btn btn-danger">
+													<span class="glyphicon glyphicon-remove"></span> Remove
+												</button></td>
+											</tr>
+											{% endfor %}
+											<tr>
+												<td>   </td>
+												<td>   </td>
+												<td>   </td>
+												<td><h5>Subtotal</h5></td>
+												<td class="text-right"><h5><strong>$24.59</strong></h5></td>
+											</tr>
+											<tr>
+												<td>   </td>
+												<td>   </td>
+												<td>   </td>
+												<td><h5>Frete</h5></td>
+												<td class="text-right"><h5><strong>$6.94</strong></h5></td>
+											</tr>
+											<tr>
+												<td>   </td>
+												<td>   </td>
+												<td>   </td>
+												<td><h3>Total</h3></td>
+												<td class="text-right"><h3><strong>$31.53</strong></h3></td>
+											</tr>
+											<tr>
+												<td>   </td>
+												<td>   </td>
+												<td>   </td>
+												<td>
+													<button type="button" class="btn btn-default">
+														<span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+													</button></td>
+													<td>
+														<button type="button" class="btn btn-success">
+															Checkout <span class="glyphicon glyphicon-play"></span>
+														</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</body>
+
+						</html>

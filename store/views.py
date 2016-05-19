@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Produto
+from .models import Produto, Carrinho
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -48,9 +48,11 @@ def Product(request, pk):
     post = get_object_or_404(Produto, pk=pk)
     return render(request, 'store/product.html', {'post': post})
 
+@login_required
 def Buy(request):
+    #add funionalidades carrinho
     posts = Produto.objects.order_by('id_produto')
-    return render(request, "store/store.html", {'posts': posts})
+    return render(request, "store/cart.html", {'posts': posts})
 
 def Reset(request):
     #contatotechstore@hotmail.com
