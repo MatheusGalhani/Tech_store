@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, BadHeaderError
+
 # Create your views here.
 #return render(request, "store/error_page_404.html", {})
 def Login(request):
@@ -53,6 +54,7 @@ def Buy(request):
 
 def Reset(request):
     #contatotechstore@hotmail.com
+    #send_mail('Subject here', 'Here is the message.', 'contatotechstore@hotmail.com', ['matheusgalhani@hotmail.com'], fail_silently=False)
     return render(request, "store/reset_password.html", {})
 
 def custom_404(request):

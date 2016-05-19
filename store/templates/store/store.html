@@ -83,19 +83,20 @@
 					<div class="checklist categories">
 						<ul>
 							<li><a href="../cameras/"><span></span>Câmeras Digitais</a></li>
-						<li><a href="../desktop/"><span></span>Desktop</a></li>
-						<li><a href="../hardware/"><span></span>Hardware</a></li>
-						<li><a href="../impressora/"><span></span>Impressora</a></li>
-						<li><a href="../notebook/"><span></span>Notebook</a></li>
-						<li><a href="../perifericos/"><span></span>Periféricos</a></li>
-						<li><a href="../redes/"><span></span>Redes</a></li>
-						<li><a href="../smartphone/"><span></span>Smartphone</a></li>
-						<li><a href="../software/"><span></span>Software</a></li>
-						<li><a href="../tablet/"><span></span>Tablet</a></li>
-						<li><a href="../televisao/"><span></span>Televisão</a></li>
+							<li><a href="../desktop/"><span></span>Desktop</a></li>
+							<li><a href="../hardware/"><span></span>Hardware</a></li>
+							<li><a href="../impressora/"><span></span>Impressora</a></li>
+							<li><a href="../notebook/"><span></span>Notebook</a></li>
+							<li><a href="../perifericos/"><span></span>Periféricos</a></li>
+							<li><a href="../redes/"><span></span>Redes</a></li>
+							<li><a href="../smartphone/"><span></span>Smartphone</a></li>
+							<li><a href="../software/"><span></span>Software</a></li>
+							<li><a href="../tablet/"><span></span>Tablet</a></li>
+							<li><a href="../televisao/"><span></span>Televisão</a></li>
 						</ul>
 					</div>
 				</div>
+				{% if posts %}
 				<div class="container-fluid">
 					{% for post in posts %}
 					<div class="col-md-2">
@@ -114,8 +115,21 @@
 					</div>
 					{% endfor %}
 				</div>
+				{% else %}
+				<div align="center">
+					<table border="0" cellspacing="0" bgcolor="#FFFFFF" width="500">
+						<tbody><tr>
+							<td>
+								<p style="text-align:center; font: bold 21px Arial; color: #0099ff; margin-top:29px; margin-bottom:29px;">Desculpe, nenhum produto foi encontrado com esse critério de pesquisa.</p>
+								<p style="text-align:center; font: bold 16px Arial;">Tente novamente com outro termo para busca...</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+			{% endif %}
+		</div>
 
-		</body>
+	</body>
 
-		</html>
+	</html>
