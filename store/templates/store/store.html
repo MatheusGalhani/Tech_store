@@ -82,17 +82,17 @@
 					<h3>CATEGORIAS</h3>
 					<div class="checklist categories">
 						<ul>
-							<li><a href="../cameras/"><span></span>Câmeras Digitais</a></li>
-							<li><a href="../desktop/"><span></span>Desktop</a></li>
-							<li><a href="../hardware/"><span></span>Hardware</a></li>
-							<li><a href="../impressora/"><span></span>Impressora</a></li>
-							<li><a href="../notebook/"><span></span>Notebook</a></li>
-							<li><a href="../perifericos/"><span></span>Periféricos</a></li>
-							<li><a href="../redes/"><span></span>Redes</a></li>
-							<li><a href="../smartphone/"><span></span>Smartphone</a></li>
-							<li><a href="../software/"><span></span>Software</a></li>
-							<li><a href="../tablet/"><span></span>Tablet</a></li>
-							<li><a href="../televisao/"><span></span>Televisão</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
 						</ul>
 					</div>
 				</div>
@@ -107,7 +107,7 @@
 							</div>
 							<div class="productprice">
 								<div class="pull-right">
-									<a href="{% url 'store.views.Buy' %}" class="btn btn-primary  btn-sm btn3d" role="button">Add to <span class="glyphicon glyphicon-shopping-cart"></span></a>
+									<a href="{% url 'store.views.Buy' pk=post.pk %}" class="btn btn-primary  btn-sm btn3d" role="button">Add to <span class="glyphicon glyphicon-shopping-cart"></span></a>
 								</div>
 								<div class="pricetext"> <p> R$ {{ post.preco_produto }} </p> </div>
 							</div>
