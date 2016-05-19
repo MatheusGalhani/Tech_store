@@ -9,48 +9,108 @@
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
-	<link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
 </head>
 
 <body>
-	{% if user.is_authenticated %}
 	<div class="page-header">
 		<div class="container-fluid">
-			<form class="navbar-form navbar-top-right" role="form" action="/home/">
+			{% if user.is_authenticated %}
+			<form class="navbar-form navbar-top-right" role="form" action="../logout/">
 				<div class="input-group">
 					<a href="/home/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
 						width="40%" height="40%" /></a>
+
 					</div>
 				</form>
-			</div>
-		</div>
-		{% else %}
-		<div class="page-header">
-			<div class="container-fluid">
-				<form class="navbar-form navbar-top-right" role="form" action="/">
-					<div class="input-group">
+				<form class="search-form" method="get" action="../search/">
+					<div class="form-group has-feedback">
+						<label for="search" class="sr-only">Search</label>
+						<input type="text" class="form-control" name="search" id="search" placeholder="search">
+						<span class="glyphicon glyphicon-search form-control-feedback"></span>
+					</div>
+				</form>
+				{% else %}
+				<form class="navbar-form navbar-top-right" role="form" action="../logout/">
+				<div class="input-group">
 					<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
-							width="40%" height="40%" /></a>
-						</div>
-					</form>
+						width="40%" height="40%" /></a>
+
+					</div>
+				</form>
+				<form class="search-form" method="get" action="../search/">
+					<div class="form-group has-feedback">
+						<label for="search" class="sr-only">Search</label>
+						<input type="text" class="form-control" name="search" id="search" placeholder="search">
+						<span class="glyphicon glyphicon-search form-control-feedback"></span>
+					</div>
+				</form>
+					{% endif %}
 				</div>
 			</div>
-			{% endif %}
+			<div id="wrapper">
+				<div class="cart-icon-top">
+				</div>
 
-			<div class="content container">
-				<div class="row">
-					<div class="col-md-8">
-						<div class="post">
-							<h1><a href="">{{ post.nome_produto }}</a></h1>
-							<p><img src="/media/{{post.imagem_produto}}" width="40%" height="40%" title={{ post.nome_produto }} border="1"/></p>
-							<p>{{ post.descricao_produto|linebreaks }}</p>
-						</div>
+				<div class="cart-icon-bottom">
+				</div>
+				<div id="header">	
+					<ul>
+						<li><a href="/">HOME</a></li>
+						<li><a href="">SOBRE</a></li>
+						<li><a href="">SUPORTE</a></li>                                       
+					</ul>		
+				</div>
+				<div id="sidebar">
+					<h3>CATEGORIAS</h3>
+					<div class="checklist categories">
+						<ul>
+							<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
+						</ul>
 					</div>
 				</div>
-			</div>
+				
+				<div class="container-fluid">
+					{% if post.qntd_produto > 0 %}
+					<div class="row">
+						<div class="col-md-8">
+							<div class="post">
+								<h1><a href="">{{ post.nome_produto }}</a></h1>
+								<p><img src="/media/{{post.imagem_produto}}" width="40%" height="40%" title={{ post.nome_produto }} border="1"/></p>
+								<p>{{ post.descricao_produto|linebreaks }}</p>
+							</div>
+						</div>
+					</div>
 
-		</body>
+					{% else %}
+					<div class="row">
+						<div class="col-md-8">
+							<div class="post">
+								<h1><a href="">{{ post.nome_produto }}</a></h1>
+								<p><img src="/media/{{post.imagem_produto}}" width="40%" height="40%" title={{ post.nome_produto }} border="1"/></p>
+								<p>{{ post.descricao_produto|linebreaks }}</p>
+							</div>
+						</div>
+					</div>
 
-		</html>
+					{% endif %}
+				</div>
+
+			</body>
+
+			</html>
