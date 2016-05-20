@@ -17,17 +17,18 @@
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
 </head>
 
+
 <body>
 	<div class="page-header">
 		<div class="container-fluid">
 			{% if user.is_authenticated %}
-			<form class="navbar-form navbar-top-right" role="form" action="../logout/">
+			<form class="navbar-form navbar-top-right" role="form" action="/logout/">
 				<div class="input-group">
 					<a href="/home/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
 						width="60%" height="60%"  /></a>
 
 					</div>
-					<a href="../logout/"><button class="btn btn-primary  btn-sm btn3d">Logout</button></a>
+					<a href="/logout/"><button class="btn btn-primary  btn-sm btn3d logout">Logout</button></a>
 
 				</form>
 				<form class="search-form" method="get" action="../search/">
@@ -55,7 +56,7 @@
 
 						<a href="/login/?next={{ request.path }}"><button href="/login/?next={{ request.path }}" type="submit" class="btn btn-primary  btn-sm btn3d">Login</button></a>
 					</form>
-					<form class="search-form" method="get" action="../search/">
+					<form class="search-form" method="get" action="/search/">
 						<div class="form-group has-feedback">
 							<label for="search" class="sr-only">Search</label>
 							<input type="text" class="form-control" name="search" id="search" placeholder="search">
@@ -96,7 +97,6 @@
 						</ul>
 					</div>
 				</div>
-				{% if posts %}
 				<div class="container-fluid">
 					{% for post in posts %}
 					{% if post.qntd_produto > 0 %}
@@ -134,22 +134,48 @@
 					</div>
 					{% endif %}
 					{% endfor %}
+
 				</div>
-				{% else %}
-				<div align="center">
-					<table border="0" cellspacing="0" bgcolor="#FFFFFF" width="500">
-						<tbody><tr>
-							<td>
-								<p style="text-align:center; font: bold 21px Arial; color: #0099ff; margin-top:29px; margin-bottom:29px;">Desculpe, nenhum produto foi encontrado com esse critério de pesquisa.</p>
-								<p style="text-align:center; font: bold 16px Arial;">Tente novamente com outro termo para busca...</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
 			</div>
-			{% endif %}
-		</div>
+			<nav align = "center">
+				<ul class="pagination">
 
-	</body>
+					{% if posts.has_previous %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Anterior</span>
+						</a>
+					</li>
+					{% else %}
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Anterior</span>
+						</a>
+					</li>
+					{% endif %}
+					{% for x in paginas %}
+					<li class="page-item"><a class="page-link" href="?page={{ x }}">{{x}}</a></li>
+					{% endfor %} 
 
-	</html>
+					{% if posts.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Próximo</span>
+						</a>
+					</li>
+					{% else %}
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Próximo</span>
+						</a>
+					</li>
+					{% endif %}
+				</ul>
+			</nav>
+		</body>
+
+		</html>

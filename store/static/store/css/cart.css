@@ -38,7 +38,7 @@ body {
 	background:#fff;
 	width:275px;	
 	padding:13px 0 0 45px;
-	height:1400px;
+	height:1500px;
 	border-right:1px solid #eee;
 }
 #sidebar h3{
@@ -223,7 +223,7 @@ div.cart-icon-top{
 	width:21px;
 	height:3px;
 	z-index:1;
-	top: 320px;
+	top: 350px;
 	left: 190px;
 }
 div.cart-icon-bottom{
@@ -233,7 +233,7 @@ div.cart-icon-bottom{
 	width:21px;
 	height:19px;
 	z-index:1;
-	top: 323px;
+	top: 353px;
 	left: 190px;
 }
 #checkout{

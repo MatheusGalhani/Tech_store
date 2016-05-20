@@ -8,7 +8,7 @@
 	<title>Tech Store</title>
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="{% static 'store/css/store_login.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
@@ -119,9 +119,48 @@
 				</div>
 				{% endif %}
 				{% endfor %}
+				
 			</div>
 		</div>
+		<nav align = "center">
+			<ul class="pagination">
 
+				{% if posts.has_previous %}
+				<li class="page-item">
+					<a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+						<span class="sr-only">Anterior</span>
+					</a>
+				</li>
+				{% else %}
+				<li class="page-item">
+					<a class="page-link" href="#" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+						<span class="sr-only">Anterior</span>
+					</a>
+				</li>
+				{% endif %}
+				{% for x in paginas %}
+				<li class="page-item"><a class="page-link" href="?page={{ x }}">{{x}}</a></li>
+				{% endfor %} 
+
+				{% if posts.has_next %}
+				<li class="page-item">
+					<a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+						<span class="sr-only">Próximo</span>
+					</a>
+				</li>
+				{% else %}
+				<li class="page-item">
+					<a class="page-link" href="#" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+						<span class="sr-only">Próximo</span>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</nav>
 	</body>
 
 	</html>

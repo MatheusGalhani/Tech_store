@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, BadHeaderError
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .forms import CarrinhoForm
 
 # Create your views here.
 #return render(request, "store/error_page_404.html", {})
@@ -23,8 +25,20 @@ def Login(request):
         else:
             return render(request, "store/login_invalid.html", {})
 
-    posts = Produto.objects.order_by('id_produto')        
-    return render(request, "store/post_list.html", {'posts': posts, 'redirect_to': next})
+    products = Produto.objects.order_by('id_produto') 
+    paginator = Paginator(products, 16)  #lista 16 produtos
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        posts = paginator.page(paginator.num_pages)
+
+    paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
+    return render(request, "store/post_list.html", {'posts': posts, 'redirect_to': next, 'paginas': paginas})
 
 def Search(request):
     if request.method == "GET":
@@ -41,8 +55,18 @@ def Logout(request):
 
 @login_required
 def Home(request):
-    posts = Produto.objects.order_by('id_produto')
-    return render(request, "store/store.html", {'posts': posts})
+    products = Produto.objects.order_by('id_produto') 
+    paginator = Paginator(products, 21)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
+    return render(request, "store/store.html", {'posts': posts, 'paginas': paginas})
 
 def Product(request, pk):
     post = get_object_or_404(Produto, pk=pk)
@@ -64,5 +88,15 @@ def custom_404(request):
 
 def Categories(request, categoria):
     nome = categoria
-    posts = Produto.objects.filter(categoria_produto = nome)
-    return render(request, "store/store.html", {'posts': posts})
+    products = Produto.objects.filter(categoria_produto = nome)
+    paginator = Paginator(products, 21)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
+    return render(request, "store/store.html", {'posts': posts, 'paginas': paginas})
