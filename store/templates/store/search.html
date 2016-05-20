@@ -18,31 +18,17 @@
 </head>
 
 <body>
-	
-	<div class="page-header">
-		<div class="container-fluid">
-			{% if user.is_authenticated %}
-			<form class="navbar-form navbar-top-right" role="form" action="../logout/">
-				<div class="input-group">
-					<a href="/home/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
-						width="60%" height="60%"  /></a>
-
-					</div>
-
-				</form>
-				<form class="search-form" method="get" action="../search/">
-					<div class="form-group has-feedback">
-						<label for="search" class="sr-only">Search</label>
-						<input type="text" class="form-control" name="search" id="search" placeholder="search">
-						<span class="glyphicon glyphicon-search form-control-feedback"></span>
-					</div>
-				</form>
-				{% else %}
-				<form class="navbar-form navbar-top-right" role="form" action ="/login/">
+	<div class="visible-desktop">
+		<div class="page-header">
+			<div class="container-fluid">
+				{% if user.is_authenticated %}
+				<form class="navbar-form navbar-top-right" role="form" action="../logout/">
 					<div class="input-group">
-						<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
-							width="60%" height="60%" /></a>
+						<a href="/home/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+							width="60%" height="60%"  /></a>
+
 						</div>
+
 					</form>
 					<form class="search-form" method="get" action="../search/">
 						<div class="form-group has-feedback">
@@ -51,74 +37,89 @@
 							<span class="glyphicon glyphicon-search form-control-feedback"></span>
 						</div>
 					</form>
-					{% endif %}
-				</div>
-
-			</div>
-
-			<div id="wrapper">
-				<div class="cart-icon-top">
-				</div>
-
-				<div class="cart-icon-bottom">
-				</div>
-				<div id="header">	
-					<ul>
-						<li><a href="/home/">HOME</a></li>
-						<li><a href="">SOBRE</a></li>
-						<li><a href="">SUPORTE</a></li>                                       
-					</ul>		
-				</div>
-				<div id="sidebar">
-					<h3>CATEGORIAS</h3>
-					<div class="checklist categories">
-						<ul>
-							<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
-						</ul>
+					{% else %}
+					<form class="navbar-form navbar-top-right" role="form" action ="/login/">
+						<div class="input-group">
+							<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+								width="60%" height="60%" /></a>
+							</div>
+						</form>
+						<form class="search-form" method="get" action="../search/">
+							<div class="form-group has-feedback">
+								<label for="search" class="sr-only">Search</label>
+								<input type="text" class="form-control" name="search" id="search" placeholder="search">
+								<span class="glyphicon glyphicon-search form-control-feedback"></span>
+							</div>
+						</form>
+						{% endif %}
 					</div>
+
 				</div>
-				{% if posts %}
-				<div class="container-fluid">
-					{% for post in posts %}
-					<div class="col-md-2">
-						<div class="productbox">
-							<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
-							<div class="producttitle">
-								<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
-							</div>
-							<div class="productprice">
-								<div class="pull-right">
-									<a href="{% url 'store.views.Buy' %}" class="btn btn-primary  btn-sm btn3d" role="button">Add to <span class="glyphicon glyphicon-shopping-cart"></span></a>
-								</div>
-								<div class="pricetext"> <p> R$ {{ post.preco_produto }} </p> </div>
-							</div>
+
+				<div id="wrapper">
+					<div class="cart-icon-top">
+					</div>
+
+					<div class="cart-icon-bottom">
+					</div>
+					<div id="header">	
+						<ul>
+							<li><a href="/home/">HOME</a></li>
+							<li><a href="">SOBRE</a></li>
+							<li><a href="">SUPORTE</a></li>                                       
+						</ul>		
+					</div>
+					<div id="sidebar">
+						<h3>CATEGORIAS</h3>
+						<div class="checklist categories">
+							<ul>
+								<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
+							</ul>
 						</div>
 					</div>
-					{% endfor %}
+					{% if posts %}
+					<div class="container-fluid">
+						{% for post in posts %}
+						<div class="col-md-2">
+							<div class="productbox">
+								<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
+								<div class="producttitle">
+									<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
+								</div>
+								<div class="productprice">
+									<div class="pull-right">
+										<a href="{% url 'store.views.Buy' %}" class="btn btn-primary  btn-sm btn3d" role="button">Add to <span class="glyphicon glyphicon-shopping-cart"></span></a>
+									</div>
+									<div class="pricetext"> <p> R$ {{ post.preco_produto }} </p> </div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					{% else %}
+					<div align="center">
+						<table border="0" cellspacing="0" bgcolor="#FFFFFF" width="500">
+							<tbody><tr>
+								<td>
+									<p style="text-align:center; font: bold 21px Arial; color: #0099ff; margin-top:29px; margin-bottom:29px;">Desculpe, nenhum produto foi encontrado com esse critério de pesquisa.</p>
+									<p style="text-align:center; font: bold 16px Arial;">Tente novamente com outro termo para busca...</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				{% else %}
-				<div align="center">
-					<table border="0" cellspacing="0" bgcolor="#FFFFFF" width="500">
-						<tbody><tr>
-							<td>
-								<p style="text-align:center; font: bold 21px Arial; color: #0099ff; margin-top:29px; margin-bottom:29px;">Desculpe, nenhum produto foi encontrado com esse critério de pesquisa.</p>
-								<p style="text-align:center; font: bold 16px Arial;">Tente novamente com outro termo para busca...</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				{% endif %}
 			</div>
-			{% endif %}
 		</div>
 	</body>
 

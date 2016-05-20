@@ -56,7 +56,7 @@ def Logout(request):
 @login_required
 def Home(request):
     products = Produto.objects.order_by('id_produto') 
-    paginator = Paginator(products, 21)
+    paginator = Paginator(products, 16)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -89,7 +89,7 @@ def custom_404(request):
 def Categories(request, categoria):
     nome = categoria
     products = Produto.objects.filter(categoria_produto = nome)
-    paginator = Paginator(products, 21)
+    paginator = Paginator(products, 16)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
