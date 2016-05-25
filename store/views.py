@@ -21,7 +21,7 @@ def LoginInvalido(request):
                 login(request, user)
                 return HttpResponseRedirect('/home/')
             else:
-                return HttpResponseRedirect('/login_error/')
+                return render(request, "store/login_inativo.html", {})
         else:
             return HttpResponseRedirect('/login_error/')
 
@@ -39,8 +39,7 @@ def Login(request):
                 login(request, user)
                 return HttpResponseRedirect(next)
             else:
-                #usuario nao ativo...
-                return HttpResponseRedirect('/login_error/')
+                return render(request, "store/login_inativo.html", {})
         else:
             return HttpResponseRedirect('/login_error/')
 
@@ -106,12 +105,19 @@ def Reset(request):
         email = request.POST['email']
         contato = Contato.objects.filter(email_contato=email)
         usuario = User.objects.filter(username = contato[0].author_usuario)
-        usuario[0].set_password(senha)
-        usuario[0].save()
-        msg = 'Sua nova senha é '+ senha
+        user = User.objects.get(id = usuario[0].id)
+        user.set_password(senha)
+        user.is_active=0
+        user.save()
+        msg = 'Sua nova senha é '+ senha + ' . Para alterar sua senha e ativar seu usuario, acesse: http://127.0.0.1:8000/change_password/' #http://techstore.pythonanywhere.com/
         send_mail('Tech Store - RESET DE SENHA', msg, 'matheusgalhani@gmail.com', [email], fail_silently=False)
         return HttpResponseRedirect('/')
     return render(request, "store/reset_password.html", {})
+
+def Change(request):
+    if request.method == "POST":
+        return render(request, "store/change_password.html", {})
+    return render(request, "store/change_password.html", {})
 
 def custom_404(request):
     return render(request, 'store/error_page_404.html', {})

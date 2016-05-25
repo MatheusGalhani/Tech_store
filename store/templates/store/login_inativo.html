@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="{% static 'store/css/store_login.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/error.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/login.css' %}">
 	<link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
@@ -18,7 +20,7 @@
 	{% block content %}
 	<style>
 		form {
-			width: 40%;
+			width: 50%;
 			margin: 100px auto;
 		}
 		.centered {
@@ -29,23 +31,15 @@
 			list-style-type: none;
 		}
 	</style>	
-	<form method="POST" action="/reset_password/" class="panel panel-default">{% csrf_token %}
+	<form method='POST' action=".?next={{ redirect_to }}" class="panel panel-default">{% csrf_token %}
 		<fieldset class="panel-body">
 			<div class="centered">
-				<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="40%" height="40%" /></a>
+				<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="35%" height="35%" /></a>
 			</div>
-			<div class="form-group">
-				<label for="email" class="cols-sm-2 control-label">Email</label>
-				<div class="cols-sm-10">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-						<input type="text" class="form-control" name="email" id="email"  placeholder="Informe seu email"/>
-					</div>
+			<div class="error-notice">
+				<div class="oaerror warning">
+					<strong>Atenção</strong> - O usuário informado está inativo. Favor entrar em contato com o suporte.
 				</div>
-			</div>
-
-			<div class="form-group ">
-				<button type="submit" class="btn btn-primary btn-lg btn-block login-button  btn-sm btn3d">Gerar nova senha</button>
 			</div>
 		</fieldset>
 	</form>

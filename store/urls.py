@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^product/(?P<pk>[0-9]+)/', views.Product),
     url(r'^add_to_car/(?P<pk>[0-9]+)/$', views.Buy),
     url(r'^reset_password/$', views.Reset),
+    url(r'^change_password/$', views.Change),
     url(r'^search/$', views.Search),
     url(r'^categoria/(?P<categoria>\w+)/$', views.Categories),
 ]

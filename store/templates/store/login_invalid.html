@@ -8,7 +8,7 @@
 	<title>Tech Store</title>
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="{% static 'store/css/store_login.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/error.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/login.css' %}">
 	<link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
@@ -34,7 +34,7 @@
 	<form method='POST' action=".?next={{ redirect_to }}" class="panel panel-default">{% csrf_token %}
 		<fieldset class="panel-body">
 			<div class="centered">
-				<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="35%" height="35%" /></a>
+				<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="40%" height="40%" /></a>
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
