@@ -17,24 +17,24 @@
 </head>
 
 <body>
-{% block content %}
-    <style>
-        form {
-            width: 50%;
-            margin: 100px auto;
-        }
-        .centered {
-            text-align: center;
-            width: 100%;
-        }
-        ul.errorlist {
-            list-style-type: none;
-        }
-    </style>	
-	<form method="post" action=".?next={{ redirect_to }}" class="panel panel-default">{% csrf_token %}
+	{% block content %}
+	<style>
+		form {
+			width: 50%;
+			margin: 100px auto;
+		}
+		.centered {
+			text-align: center;
+			width: 100%;
+		}
+		ul.errorlist {
+			list-style-type: none;
+		}
+	</style>	
+	<form method='POST' action=".?next={{ redirect_to }}" class="panel panel-default">{% csrf_token %}
 		<fieldset class="panel-body">
 			<div class="centered">
-				<img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="25%" height="25%" />
+				<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="35%" height="35%" /></a>
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -43,14 +43,16 @@
 
 			<div class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-				<input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                        
+				<input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                       
 			</div>
+
 			<button type="submit" class="btn btn-primary  btn-sm btn3d" style="width: 100%">Login</button>
 			<div class="error-notice">
 				<div class="oaerror danger">
-					<strong>Error</strong> - You provided a wrong username/password
+					<strong>Error</strong> - Usuario/Senha invalido
 				</div>
 			</div>
+			<a href="/reset_password/"><small class="text-muted">Esqueceu sua senha?</small></a> 
 		</fieldset>
 	</form>
 	{% endblock %}
