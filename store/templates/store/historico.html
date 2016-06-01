@@ -12,11 +12,11 @@
 	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
-	<link rel="stylesheet" href="{% static 'store/css/info.css' %}">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
 </head>
+
 
 <body>
 	<div class="visible-desktop">
@@ -64,7 +64,7 @@
 						<li><a href="{% url 'store.views.Suporte' %}">SUPORTE</a></li>
 						{% if user.is_authenticated %}
 						<li><a href="{% url 'store.views.Historico' id=user.id %}">MINHAS COMPRAS</a></li>
-						{% endif %}                                      
+						{% endif %}                                     
 					</ul>		
 				</div>
 				<div id="sidebar">
@@ -86,19 +86,35 @@
 					</div>
 				</div>
 				<div class="container-fluid main-container">
-					<div class="col-md-10 content">
+					<div class="col-md-9 content">
 						<div class="panel panel-default">
-							<div class="panel-heading">
-								<strong>{{ post.nome_produto }}</strong>
-							</div>
-							<div class="panel-body">
-								<p align="center"><img src="/media/{{post.imagem_produto}}" width="30%" height="30%" title={{ post.nome_produto }} border="1"/></p>
-								<p>{{ post.descricao_produto|linebreaks }}</p>
-							</div>
+							<table class="table table-bordered table-striped table-condensed table-hover">
+								<thead>
+									<tr>
+										<th>NºPEDIDO</th>
+										<th>PRODUTO</th>
+										<th>QUANTIDADE</th>
+										<th>TOTAL</th>
+										<th>STATUS</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for carrinho in cart %}
+									<tr>
+										<td>{{ carrinho.id_carrinho }}</td>
+										<td>{{ carrinho.produto_compra }}</td>
+										<td>{{ carrinho.qntd_produtos }}</td>
+										<td>R$ {{carrinho.preco_total}}</td>
+										<td>{{carrinho.id_status}}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
 						</div>
-					</div>	
-				</div>			
+					</div>
+				</div>
 			</div>
-		</body>
+		</div>
+	</body>
 
-		</html>
+	</html>

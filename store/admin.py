@@ -24,7 +24,14 @@ class ContatoAdmin(admin.ModelAdmin):
 	search_fields = ['nome_completo']
 	save_on_top = False
 
+class CarrinhoAdmin(admin.ModelAdmin):
+    model = Carrinho
+    list_display = ['id_carrinho','usuario_compra', 'produto_compra', 'id_status']
+    list_filter = ['created_date','usuario_compra', 'id_status']
+    search_fields = ['produto_compra']
+    save_on_top = False
+
 admin.site.register(Produto, ProdutoAdmin)
 admin.site.register(Statu, StatuAdmin)
 admin.site.register(Contato, ContatoAdmin)
-admin.site.register(Carrinho)
+admin.site.register(Carrinho, CarrinhoAdmin)

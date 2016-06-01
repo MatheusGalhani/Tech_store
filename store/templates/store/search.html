@@ -21,14 +21,26 @@
 	<div class="visible-desktop">
 		<div class="page-header">
 			<div class="container-fluid">
-				<form class="navbar-form navbar-top-right" role="form" action="../logout/">
+				{% if user.is_authenticated %}
+				<form class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.Logout' id=user.id %}">
 					<div class="input-group">
 						<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
 							width="60%" height="60%"  /></a>
 
 						</div>
-
+						<a href="{% url 'store.views.Logout' id=user.id %}"><button class="btn btn-primary  btn-sm btn3d logout">Logout</button></a>
+						
 					</form>
+					{%else%}
+					<form class="navbar-form navbar-top-right" role="form">
+						<div class="input-group">
+							<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+								width="60%" height="60%"  /></a>
+
+							</div>
+
+						</form>
+						{% endif %}
 					<form class="search-form" method="get" action="{% url 'store.views.Search' %}">
 						<div class="form-group has-feedback">
 							<label for="search" class="sr-only">Search</label>
@@ -37,9 +49,7 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
-
 			<div id="wrapper">
 				<div class="cart-icon-top">
 				</div>
@@ -50,7 +60,10 @@
 					<ul>
 						<li><a href="{% url 'store.views.Home' %}">HOME</a></li>
 						<li><a href="">SOBRE</a></li>
-						<li><a href="">SUPORTE</a></li>                                       
+						<li><a href="">SUPORTE</a></li>       
+						{% if user.is_authenticated %}
+						<li><a href="{% url 'store.views.Historico' id=user.id %}">MINHAS COMPRAS</a></li>
+						{% endif %}                                 
 					</ul>		
 				</div>
 				<div id="sidebar">

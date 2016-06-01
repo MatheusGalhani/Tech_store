@@ -20,7 +20,10 @@ def Login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(next)
+                if user.is_superuser:
+                    return HttpResponseRedirect('/admin')
+                else:
+                    return HttpResponseRedirect(next)
             else:
                 return render(request, "store/login_invalid.html", {'erro':2})
         else:
@@ -50,10 +53,12 @@ def Search(request):
     posts = Produto.objects.order_by('id_produto')
     return render(request, "store/search.html", {'posts': posts})
 
-def Logout(request):    
-    #verifica se possui produtos pendentes no carrinho de compras do usuario antes de deslogar
-    CancelaCompra(request, -1, 0)
+def Logout(request, id):   
     logout(request)
+    cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+    for x in cart:
+        x.id_status = Statu.objects.get(id_status=3)
+        x.save()
     return HttpResponseRedirect('/')
 
 @login_required
@@ -106,6 +111,19 @@ def Buy(request, pk, id):
     return render(request, "store/cart.html", {})
 
 @login_required
+def Historico(request, id):
+    cart = Carrinho.objects.filter(usuario_compra=id)
+    mylist = []
+    for x in cart:
+        mylist.append(x.produto_compra)
+    listapk = []
+    for x in mylist:
+        id = Produto.objects.filter(nome_produto__contains = x)
+        listapk.append(id[0].id_produto)
+    posts = Produto.objects.filter(id_produto__in = listapk)
+    return render(request, "store/historico.html", {'posts': posts, 'cart':cart})
+
+@login_required
 def ExibicaoCarrinho(request, id):
     cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
     mylist = []
@@ -123,18 +141,12 @@ def ExibicaoCarrinho(request, id):
 
 @login_required
 def CancelaCompra(request, pk, id):
-    if pk == -1:
-        cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
-        for x in cart:
-            x.id_status = Statu.objects.get(id_status=3)
-            x.save()
-    else:
-        produto = get_object_or_404(Produto, pk=pk)
-        cart = Carrinho.objects.filter(id_status=2, usuario_compra=id, produto_compra = produto)
-        for x in cart:
-            x.id_status = Statu.objects.get(id_status=3)
-            x.save()
-        return HttpResponseRedirect('/carrinho/%s/'%id)
+    produto = get_object_or_404(Produto, pk=pk)
+    cart = Carrinho.objects.filter(id_status=2, usuario_compra=id, produto_compra = produto)
+    for x in cart:
+        x.id_status = Statu.objects.get(id_status=3)
+        x.save()
+    return HttpResponseRedirect('/carrinho/%s/'%id)
 
 @login_required
 def FinalizaCompra(request, id):
@@ -215,3 +227,8 @@ def Categories2(request, categoria):
     paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
     return render(request, "store/post_list.html", {'posts': posts, 'paginas': paginas})
 
+def Sobre(request):
+    return render(request, "store/sobre.html", {})
+
+def Suporte(request):
+    return render(request, "store/suporte.html", {})

@@ -92,6 +92,8 @@ class Carrinho(models.Model):
 	produto_compra = models.ForeignKey('Produto')
 	preco_total = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço Total')
 	id_status = models.ForeignKey('Statu')
+	def __int__(self):
+		return self.id_carrinho
 
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)

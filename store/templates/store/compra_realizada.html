@@ -22,36 +22,34 @@
 	<div class="visible-desktop">
 		<div class="page-header">
 			<div class="container-fluid">
-
-				<form id="signin" class="navbar-form navbar-top-right" role="form" method='POST' action="{% url 'store.views.Login' %}">{% csrf_token %}
+				{% if user.is_authenticated %}
+				<form class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.Logout' id=user.id %}">
 					<div class="input-group">
-						<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
-							width="60%" height="60%" /></a>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							<input id="username" type="text" class="form-control" name="username" value="" placeholder="Username">                                        
-						</div>
+						<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+							width="60%" height="60%"  /></a>
 
-						<div class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							<input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                        
 						</div>
-						<button type="submit" class="btn btn-primary btn-sm btn3d">Login</button>
-						<div class="input-group">
-							<p align="right"><a href="/reset_password/"><font color=#f2f2f2><small>ESQUECEU SUA SENHA?</small></font></a></p>                                       
-						</div>
+						<a href="{% url 'store.views.Logout' id=user.id %}"><button class="btn btn-primary  btn-sm btn3d logout">Logout</button></a>
+						
 					</form>
-					<form class="search-form" method="get" action="search/">
+					{%else%}
+					<form class="navbar-form navbar-top-right" role="form">
+						<div class="input-group">
+							<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+								width="60%" height="60%"  /></a>
+
+							</div>
+
+						</form>
+						{% endif %}
+					<form class="search-form" method="get" action="{% url 'store.views.Search' %}">
 						<div class="form-group has-feedback">
 							<label for="search" class="sr-only">Search</label>
 							<input type="text" class="form-control" name="search" id="search" placeholder="search">
 							<span class="glyphicon glyphicon-search form-control-feedback"></span>
 						</div>
 					</form>
-
 				</div>
-
 			</div>
 			<div id="wrapper">
 				<div class="cart-icon-top">
@@ -61,9 +59,12 @@
 				</div>
 				<div id="header">	
 					<ul>
-						<li><a href="/">HOME</a></li>
-						<li><a href="">SOBRE</a></li>
-						<li><a href="">SUPORTE</a></li>                                       
+						<li><a href="{% url 'store.views.Home' %}">HOME</a></li>
+						<li><a href="{% url 'store.views.Sobre' %}">SOBRE</a></li>
+						<li><a href="{% url 'store.views.Suporte' %}">SUPORTE</a></li>
+						{% if user.is_authenticated %}
+						<li><a href="{% url 'store.views.Historico' id=user.id %}">MINHAS COMPRAS</a></li>
+						{% endif %}                                      
 					</ul>		
 				</div>
 				<div id="sidebar">
@@ -87,7 +88,7 @@
 				<div class="container center">
 					<div class="row">
 						<div class="col-md-6 col-md-offset-3 text-center">
-						<h1><font color="#39B3D7"><strong>COMPRA REALIZADA COM SUCESSO!</strong></font></h1>
+							<h1><font color="#39B3D7"><strong>COMPRA REALIZADA COM SUCESSO!</strong></font></h1>
 							<br />
 							<p>Obrigado pela preferência! Continue aproveitando nossos produtos e promoções em nosso site. </p>
 							<a href="{% url 'store.views.Home' %}"><button type="button" class="btn btn-info btn-lg btn3d"><span class="glyphicon glyphicon-ok"></span> Volte para a página inicial</button></a>
