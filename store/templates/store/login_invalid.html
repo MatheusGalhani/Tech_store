@@ -55,6 +55,25 @@
 			<p align="center"><a href="/reset_password/"><small class="text-muted">Esqueceu sua senha?</small></a> </p>
 			{% endif %}
 			{% if erro == 2 %}
+			<div class="centered">
+				<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="40%" height="40%" /></a>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input id="username" type="text" class="form-control" name="username" value="" placeholder="Username">                                        
+			</div>
+
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+				<input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                       
+			</div>
+			<button type="submit" class="btn btn-primary  btn-sm btn3d" style="width: 100%">Login</button>
+			<div class="error-notice">
+				<div class="oaerror warning">
+					<strong>Atenção</strong> - Usuario informado está inativo. Favor entrar em contato com o suporte.
+				</div>
+			</div>
+			<p align="center"><a href="/reset_password/"><small class="text-muted">Esqueceu sua senha?</small></a> </p>
 			{% endif %}
 		</fieldset>
 	</form>

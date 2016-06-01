@@ -159,7 +159,7 @@ def FinalizaCompra(request, id):
 def Reset(request):
     aux = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz'
     senha = ''
-    for s in range(15):
+    for s in range(12):
         senha += choice(aux)
     if request.method == "POST":
         try:
@@ -187,11 +187,12 @@ def Change(request):
         user = User.objects.get(id = usuario[0].id)
         if user.check_password(oldsenha):
             user.set_password(senha)
+            user.save()
             user.is_active=True
             user.save()
             return HttpResponseRedirect('/')
         else:
-            return render(request, "store/change_password_error.html", {})
+            return render(request, "store/change_password.html", {'erro':1})
     return render(request, "store/change_password.html", {})
 
 def custom_404(request):
