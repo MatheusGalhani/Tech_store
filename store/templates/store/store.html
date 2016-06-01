@@ -22,162 +22,147 @@
 	<div class="visible-desktop">
 		<div class="page-header">
 			<div class="container-fluid">
-				{% if user.is_authenticated %}
 				<form class="navbar-form navbar-top-right" role="form" action="/logout/">
 					<div class="input-group">
-						<a href="/home/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+						<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
 							width="60%" height="60%"  /></a>
 
 						</div>
+						{% if user.is_authenticated %}
 						<a href="/logout/"><button class="btn btn-primary  btn-sm btn3d logout">Logout</button></a>
+						{% endif %}
 
 					</form>
-					<form class="search-form" method="get" action="../search/">
+					<form class="search-form" method="get" action="{% url 'store.views.Search' %}">
 						<div class="form-group has-feedback">
 							<label for="search" class="sr-only">Search</label>
 							<input type="text" class="form-control" name="search" id="search" placeholder="search">
 							<span class="glyphicon glyphicon-search form-control-feedback"></span>
 						</div>
 					</form>
-					{% else %}
-					<form class="navbar-form navbar-top-right" role="form" action ="/login/?next={{ request.path }}">{% csrf_token %}
-						<div class="input-group">
-							<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
-								width="60%" height="60%" /></a>
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-								<input type="text" class="form-control" name="email" value="" placeholder="Username">                                        
-							</div>
-
-							<div class="input-group">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-								<input type="password" class="form-control" name="password" value="" placeholder="Password">                                        
-							</div>
-
-							<a href="/login/?next={{ request.path }}"><button href="/login/?next={{ request.path }}" type="submit" class="btn btn-primary  btn-sm btn3d">Login</button></a>
-						</form>
-						<form class="search-form" method="get" action="/search/">
-							<div class="form-group has-feedback">
-								<label for="search" class="sr-only">Search</label>
-								<input type="text" class="form-control" name="search" id="search" placeholder="search">
-								<span class="glyphicon glyphicon-search form-control-feedback"></span>
-							</div>
-						</form>
-						{% endif %}
-					</div>
 				</div>
-				<div id="wrapper">
-					<div class="cart-icon-top">
-					</div>
-
-					<div class="cart-icon-bottom">
-					</div>
-					<div id="header">	
-						<ul>
-							<li><a href="/">HOME</a></li>
-							<li><a href="">SOBRE</a></li>
-							<li><a href="">SUPORTE</a></li>                                       
-						</ul>		
-					</div>
-					<div id="sidebar">
-						<h3>CATEGORIAS</h3>
-						<div class="checklist categories">
-							<ul>
-								<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
-								<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="container-fluid">
-						{% for post in posts %}
-						{% if post.qntd_produto > 0 %}
-						<div class="col-md-2">
-							<div class="productbox">
-								<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
-								<div class="producttitle">
-									<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
-								</div>
-								<div class="productprice">
-									<div class="pull-right">
-										<a href="{% url 'store.views.Buy' pk=post.pk %}" class="btn btn-primary  btn-sm btn3d" role="button">Add to <span class="glyphicon glyphicon-shopping-cart"></span></a>
-									</div>
-									<div class="pricetext"> <p> R$ {{ post.preco_produto }} </p> </div>
-								</div>
-							</div>
-						</div>
-						{% else %}
-						<div class="col-md-2">
-							<div class="productbox2">
-								<div class="offer offer-radius offer-danger">
-									<div class="shape">
-										<div class="shape-text">
-											Sem estoque					
-										</div>
-									</div>
-									<div class="offer-content">
-										<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
-									</div>
-								</div>
-								<div class="producttitle">
-									<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
-								</div>
-							</div>
-						</div>
-						{% endif %}
-						{% endfor %}
-
-					</div>
-				</div>
-				<nav align = "center">
-					<ul class="pagination">
-
-						{% if posts.has_previous %}
-						<li class="page-item">
-							<a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-								<span class="sr-only">Anterior</span>
-							</a>
-						</li>
-						{% else %}
-						<li class="page-item">
-							<a class="page-link" href="#" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-								<span class="sr-only">Anterior</span>
-							</a>
-						</li>
-						{% endif %}
-						{% for x in paginas %}
-						<li class="page-item"><a class="page-link" href="?page={{ x }}">{{x}}</a></li>
-						{% endfor %} 
-
-						{% if posts.has_next %}
-						<li class="page-item">
-							<a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-								<span class="sr-only">Próximo</span>
-							</a>
-						</li>
-						{% else %}
-						<li class="page-item">
-							<a class="page-link" href="#" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-								<span class="sr-only">Próximo</span>
-							</a>
-						</li>
-						{% endif %}
-					</ul>
-				</nav>
 			</div>
-		</body>
+			<div id="wrapper">
+				<div class="cart-icon-top">
+				</div>
 
-		</html>
+				<div class="cart-icon-bottom">
+				</div>
+				<div id="header">	
+					<ul>
+						<li><a href="{% url 'store.views.Home' %}">HOME</a></li>
+						<li><a href="">SOBRE</a></li>
+						<li><a href="">SUPORTE</a></li>                                       
+					</ul>		
+				</div>
+				<div id="sidebar">
+					<h3>CATEGORIAS</h3>
+					<div class="checklist categories">
+						<ul>
+							<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="container-fluid">
+					{% for post in posts %}
+					{% if post.qntd_produto > 0 %}
+					<div class="col-md-2">
+						<div class="productbox">
+							<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
+							<div class="producttitle">
+								<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
+							</div>
+							<div class="productprice">
+								<div class="pull-right">
+								{% if user.is_authenticated %}
+									<form method='POST' class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.Buy' pk=post.pk id=user.id %}">{% csrf_token %}
+										<button type="submit" class="btn btn-primary  btn-sm btn3d">Add to
+											<span class="glyphicon glyphicon-shopping-cart"></span>
+										</button>
+									</form>
+								{% else %}
+										<button class="btn btn-primary  btn-sm btn3d">Adicionar
+											<span class="glyphicon glyphicon-shopping-cart"></span>
+										</button>
+								{% endif %}
+								</div>
+								<div class="pricetext"> <p> R$ {{ post.preco_produto }} </p> </div>
+							</div>
+						</div>
+					</div>
+					{% else %}
+					<div class="col-md-2">
+						<div class="productbox2">
+							<div class="offer offer-radius offer-danger">
+								<div class="shape">
+									<div class="shape-text">
+										Sem estoque					
+									</div>
+								</div>
+								<div class="offer-content">
+									<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
+								</div>
+							</div>
+							<div class="producttitle">
+								<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+					{% endfor %}
+
+				</div>
+			</div>
+			<nav align = "center">
+				<ul class="pagination">
+
+					{% if posts.has_previous %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Anterior</span>
+						</a>
+					</li>
+					{% else %}
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Anterior</span>
+						</a>
+					</li>
+					{% endif %}
+					{% for x in paginas %}
+					<li class="page-item"><a class="page-link" href="?page={{ x }}">{{x}}</a></li>
+					{% endfor %} 
+
+					{% if posts.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Próximo</span>
+						</a>
+					</li>
+					{% else %}
+					<li class="page-item">
+						<a class="page-link" href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Próximo</span>
+						</a>
+					</li>
+					{% endif %}
+				</ul>
+			</nav>
+		</div>
+	</body>
+
+	</html>

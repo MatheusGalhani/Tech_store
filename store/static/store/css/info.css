@@ -1,0 +1,18 @@
+h1.page-header {
+    margin-top: -5px;
+}
+
+.sidebar {
+    padding-left: 0;
+}
+
+.main-container { 
+    background: #FFF;
+    padding-top: 35px;
+    margin-top: -20px;
+    margin-left: 50px;
+}
+
+.footer {
+    width: 100%;
+}  

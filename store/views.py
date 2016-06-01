@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Produto, Carrinho, Contato
+from .models import Produto, Carrinho, Contato, Statu
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -10,23 +10,6 @@ from django.contrib.auth.models import User
 from random import choice
 # Create your views here.
 #return render(request, "store/error_page_404.html", {})
-def LoginInvalido(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect('/home/')
-            else:
-                return render(request, "store/login_inativo.html", {})
-        else:
-            return HttpResponseRedirect('/login_error/')
-
-    return render(request, "store/login_invalid.html", {})
-
 def Login(request):
     next = request.GET.get('next', '/home/')
     if request.method == "POST":
@@ -39,9 +22,9 @@ def Login(request):
                 login(request, user)
                 return HttpResponseRedirect(next)
             else:
-                return render(request, "store/login_inativo.html", {})
+                return render(request, "store/login_invalid.html", {'erro':2})
         else:
-            return HttpResponseRedirect('/login_error/')
+            return render(request, "store/login_invalid.html", {'erro':1})
 
     products = Produto.objects.order_by('id_produto') 
     paginator = Paginator(products, 16)  #lista 16 produtos
@@ -67,7 +50,9 @@ def Search(request):
     posts = Produto.objects.order_by('id_produto')
     return render(request, "store/search.html", {'posts': posts})
 
-def Logout(request):
+def Logout(request):    
+    #verifica se possui produtos pendentes no carrinho de compras do usuario antes de deslogar
+    CancelaCompra(request, -1, 0)
     logout(request)
     return HttpResponseRedirect('/')
 
@@ -91,10 +76,73 @@ def Product(request, pk):
     return render(request, 'store/product.html', {'post': post})
 
 @login_required
-def Buy(request, pk):
+def Buy(request, pk, id):
     #add funionalidades carrinho
-    posts = Produto.objects.order_by('id_produto')
-    return render(request, "store/cart.html", {'posts': posts})
+    if request.method == "POST":
+        produto = get_object_or_404(Produto, pk=pk)
+        cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+        produto_existente = False
+        form = CarrinhoForm()
+        carrinho = form.save(commit=False)
+        user = User.objects.get(id=id)
+        for x in cart:
+            if x.produto_compra == get_object_or_404(Produto, pk=pk):
+                produto_existente = True
+        if produto_existente:
+            cart = Carrinho.objects.filter(id_status=2, usuario_compra=id, produto_compra = produto)
+            for x in cart:
+                x.qntd_produtos = (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos)+1
+                x.save()
+                x.preco_total = produto.preco_produto * (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos) 
+                x.save()
+        else:
+            carrinho.usuario_compra = user
+            carrinho.qntd_produtos = 1
+            carrinho.produto_compra = produto
+            carrinho.preco_total = produto.preco_produto * carrinho.qntd_produtos 
+            carrinho.id_status = get_object_or_404(Statu, pk=2)
+            carrinho.save()
+        return HttpResponseRedirect('/carrinho/%s/'%id)
+    return render(request, "store/cart.html", {})
+
+@login_required
+def ExibicaoCarrinho(request, id):
+    cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+    mylist = []
+    subtotal = 0
+    for x in cart:
+        mylist.append(x.produto_compra)
+        subtotal += x.preco_total
+    total = subtotal + 12
+    listapk = []
+    for x in mylist:
+        id = Produto.objects.filter(nome_produto__contains = x)
+        listapk.append(id[0].id_produto)
+    posts = Produto.objects.filter(id_produto__in = listapk)
+    return render(request, "store/cart.html", {'posts': posts, 'cart':cart, 'subtotal': subtotal, 'total': total})
+
+@login_required
+def CancelaCompra(request, pk, id):
+    if pk == -1:
+        cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+        for x in cart:
+            x.id_status = Statu.objects.get(id_status=3)
+            x.save()
+    else:
+        produto = get_object_or_404(Produto, pk=pk)
+        cart = Carrinho.objects.filter(id_status=2, usuario_compra=id, produto_compra = produto)
+        for x in cart:
+            x.id_status = Statu.objects.get(id_status=3)
+            x.save()
+        return HttpResponseRedirect('/carrinho/%s/'%id)
+
+@login_required
+def FinalizaCompra(request, id):
+    cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+    for x in cart:
+        x.id_status = Statu.objects.get(id_status=1)
+        x.save()
+    return render(request, "store/compra_realizada.html", {})
 
 def Reset(request):
     aux = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz'
@@ -102,21 +150,36 @@ def Reset(request):
     for s in range(15):
         senha += choice(aux)
     if request.method == "POST":
-        email = request.POST['email']
-        contato = Contato.objects.filter(email_contato=email)
-        usuario = User.objects.filter(username = contato[0].author_usuario)
-        user = User.objects.get(id = usuario[0].id)
-        user.set_password(senha)
-        user.is_active=0
-        user.save()
-        msg = 'Sua nova senha é '+ senha + ' . Para alterar sua senha e ativar seu usuario, acesse: http://127.0.0.1:8000/change_password/' #http://techstore.pythonanywhere.com/
-        send_mail('Tech Store - RESET DE SENHA', msg, 'matheusgalhani@gmail.com', [email], fail_silently=False)
-        return HttpResponseRedirect('/')
-    return render(request, "store/reset_password.html", {})
+        try:
+            email = request.POST['email']
+            contato = Contato.objects.filter(email_contato=email)
+            usuario = User.objects.filter(username = contato[0].author_usuario)
+            user = User.objects.get(id = usuario[0].id)
+            user.set_password(senha)
+            user.is_active=False
+            user.save()
+            msg = 'Sua nova senha é '+ senha + ' . Para alterar sua senha e ativar seu usuario, acesse: http://127.0.0.1:8000/change_password/' #http://techstore.pythonanywhere.com/
+            send_mail('Tech Store - RESET DE SENHA', msg, 'matheusgalhani@gmail.com', [email], fail_silently=False)
+            return HttpResponseRedirect('/')
+        except:
+            return render(request, "store/reset_password.html", {'erro':1})
+    return render(request, "store/reset_password.html", {'erro':0})
 
 def Change(request):
     if request.method == "POST":
-        return render(request, "store/change_password.html", {})
+        email = request.POST['email']
+        senha = request.POST['newsenha']
+        oldsenha = request.POST['oldsenha']
+        contato = Contato.objects.filter(email_contato=email)
+        usuario = User.objects.filter(username = contato[0].author_usuario)
+        user = User.objects.get(id = usuario[0].id)
+        if user.check_password(oldsenha):
+            user.set_password(senha)
+            user.is_active=True
+            user.save()
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, "store/change_password_error.html", {})
     return render(request, "store/change_password.html", {})
 
 def custom_404(request):
@@ -136,3 +199,19 @@ def Categories(request, categoria):
 
     paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
     return render(request, "store/store.html", {'posts': posts, 'paginas': paginas})
+
+def Categories2(request, categoria):
+    nome = categoria
+    products = Produto.objects.filter(categoria_produto = nome)
+    paginator = Paginator(products, 16)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
+    return render(request, "store/post_list.html", {'posts': posts, 'paginas': paginas})
+

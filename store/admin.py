@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Produto, Pagamento, Statu, Contato
+from .models import Produto, Statu, Contato, Carrinho
 
 class ProdutoAdmin(admin.ModelAdmin):
     model = Produto
@@ -8,18 +8,6 @@ class ProdutoAdmin(admin.ModelAdmin):
     list_filter = ['categoria_produto', 'nome_produto']
     search_fields = ['nome_produto']
     save_on_top = False
-
-
-
-class PagamentoAdmin(admin.ModelAdmin):
-    model = Pagamento
-    #list_display mostra nome do campo na coluna
-    list_display = ['id_pagamento','tipo_pagamento']
-    list_filter = ['tipo_pagamento']
-    search_fields = ['tipo_pagamento']
-    save_on_top = False
-
-
 
 class StatuAdmin(admin.ModelAdmin):
     model = Statu
@@ -36,7 +24,7 @@ class ContatoAdmin(admin.ModelAdmin):
 	search_fields = ['nome_completo']
 	save_on_top = False
 
-admin.site.register(Pagamento, PagamentoAdmin)
 admin.site.register(Produto, ProdutoAdmin)
 admin.site.register(Statu, StatuAdmin)
 admin.site.register(Contato, ContatoAdmin)
+admin.site.register(Carrinho)

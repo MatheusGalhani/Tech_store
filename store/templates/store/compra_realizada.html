@@ -12,31 +12,46 @@
 	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
-	<link rel="stylesheet" href="{% static 'store/css/info.css' %}">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 	<div class="visible-desktop">
 		<div class="page-header">
 			<div class="container-fluid">
-				<form class="navbar-form navbar-top-right" role="form">
-					<div class="input-group">
-						<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
-							width="60%" height="60%" /></a>
 
+				<form id="signin" class="navbar-form navbar-top-right" role="form" method='POST' action="{% url 'store.views.Login' %}">{% csrf_token %}
+					<div class="input-group">
+						<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+							width="60%" height="60%" /></a>
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							<input id="username" type="text" class="form-control" name="username" value="" placeholder="Username">                                        
+						</div>
+
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                        
+						</div>
+						<button type="submit" class="btn btn-primary btn-sm btn3d">Login</button>
+						<div class="input-group">
+							<p align="right"><a href="/reset_password/"><font color=#f2f2f2><small>ESQUECEU SUA SENHA?</small></font></a></p>                                       
 						</div>
 					</form>
-					<form class="search-form" method="get" action="../search/">
+					<form class="search-form" method="get" action="search/">
 						<div class="form-group has-feedback">
 							<label for="search" class="sr-only">Search</label>
 							<input type="text" class="form-control" name="search" id="search" placeholder="search">
 							<span class="glyphicon glyphicon-search form-control-feedback"></span>
 						</div>
 					</form>
+
 				</div>
+
 			</div>
 			<div id="wrapper">
 				<div class="cart-icon-top">
@@ -46,7 +61,7 @@
 				</div>
 				<div id="header">	
 					<ul>
-						<li><a href="{% url 'store.views.Home' %}">HOME</a></li>
+						<li><a href="/">HOME</a></li>
 						<li><a href="">SOBRE</a></li>
 						<li><a href="">SUPORTE</a></li>                                       
 					</ul>		
@@ -69,19 +84,19 @@
 						</ul>
 					</div>
 				</div>
-				<div class="container-fluid main-container">
-					<div class="col-md-10 content">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<strong>{{ post.nome_produto }}</strong>
-							</div>
-							<div class="panel-body">
-								<p align="center"><img src="/media/{{post.imagem_produto}}" width="30%" height="30%" title={{ post.nome_produto }} border="1"/></p>
-								<p>{{ post.descricao_produto|linebreaks }}</p>
-							</div>
+				<div class="container center">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+						<h1><font color="#39B3D7"><strong>COMPRA REALIZADA COM SUCESSO!</strong></font></h1>
+							<br />
+							<p>Obrigado pela preferência! Continue aproveitando nossos produtos e promoções em nosso site. </p>
+							<a href="{% url 'store.views.Home' %}"><button type="button" class="btn btn-info btn-lg btn3d"><span class="glyphicon glyphicon-ok"></span> Volte para a página inicial</button></a>
+							<br />
 						</div>
-					</div>	
-				</div>			
+					</div>
+				</div>
+
+				
 			</div>
 		</body>
 

@@ -31,10 +31,11 @@
 			list-style-type: none;
 		}
 	</style>	
-	<form method='POST' action=".?next={{ redirect_to }}" class="panel panel-default">{% csrf_token %}
+	<form method="POST" action="{% url 'store.views.Login'%}" class="panel panel-default">{% csrf_token %}
 		<fieldset class="panel-body">
+			{% if erro == 1 %}
 			<div class="centered">
-				<a href="/"><img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="40%" height="40%" /></a>
+				<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem.png' %}" width="40%" height="40%" /></a>
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -45,14 +46,16 @@
 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 				<input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">                                       
 			</div>
-
 			<button type="submit" class="btn btn-primary  btn-sm btn3d" style="width: 100%">Login</button>
 			<div class="error-notice">
 				<div class="oaerror danger">
 					<strong>Error</strong> - Usuario/Senha invalido
 				</div>
 			</div>
-			<a href="/reset_password/"><small class="text-muted">Esqueceu sua senha?</small></a> 
+			<p align="center"><a href="/reset_password/"><small class="text-muted">Esqueceu sua senha?</small></a> </p>
+			{% endif %}
+			{% if erro == 2 %}
+			{% endif %}
 		</fieldset>
 	</form>
 	{% endblock %}

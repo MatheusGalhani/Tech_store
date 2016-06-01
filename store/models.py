@@ -68,7 +68,7 @@ def validate_cep(value):
 # Create your models here.
 class Produto(models.Model):
 	id_produto = models.AutoField(primary_key=True)
-	nome_produto = models.CharField(max_length=160)
+	nome_produto = models.CharField(max_length=160, unique=True)
 	descricao_produto = models.TextField()
 	imagem_produto = models.FileField(verbose_name=u'Foto do produto')
 	categoria_produto = models.CharField(choices= CATEGORIA_CHOICES, max_length=200, verbose_name=u'Categoria')
@@ -77,12 +77,6 @@ class Produto(models.Model):
 	valor_compra = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço da compra')
 	def __str__(self):
 		return self.nome_produto
-
-class Pagamento(models.Model):
-	id_pagamento = models.AutoField(primary_key=True)
-	tipo_pagamento = models.CharField(max_length=160, unique=True)
-	def __str__(self):
-		return self.tipo_pagamento
 
 class Statu(models.Model):
 	id_status = models.AutoField(primary_key=True)
@@ -97,10 +91,7 @@ class Carrinho(models.Model):
 	created_date = models.DateTimeField(default=timezone.now)
 	produto_compra = models.ForeignKey('Produto')
 	preco_total = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço Total')
-	id_tipo_pagamento = models.ForeignKey('Pagamento')
 	id_status = models.ForeignKey('Statu')
-	def __str__(self):
-		return self.usuario_compra
 
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)
@@ -119,3 +110,4 @@ class Contato(models.Model):
 	cep_endereco = models.CharField(max_length=50, verbose_name=u'CEP', validators=[validate_cep])
 	def __str__(self):
 		return self.cpf_contato
+
