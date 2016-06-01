@@ -170,7 +170,7 @@ def Reset(request):
             user.set_password(senha)
             user.is_active=False
             user.save()
-            msg = 'Sua nova senha é '+ senha + ' . Para alterar sua senha e ativar seu usuario, acesse: http://127.0.0.1:8000/change_password/' #http://techstore.pythonanywhere.com/
+            msg = 'Sua nova senha é '+ senha + ' . Para alterar sua senha e ativar seu usuario, acesse: http://techstore.pythonanywhere.com/change_password/' #http://techstore.pythonanywhere.com/
             send_mail('Tech Store - RESET DE SENHA', msg, 'matheusgalhani@gmail.com', [email], fail_silently=False)
             return HttpResponseRedirect('/')
         except:
