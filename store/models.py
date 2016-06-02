@@ -75,6 +75,7 @@ class Produto(models.Model):
 	preco_produto = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço da venda')
 	qntd_produto = models.IntegerField(verbose_name=u'Quantidade de estoque')
 	valor_compra = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço da compra')
+	produto_indisponivel = models.BooleanField()
 	def __str__(self):
 		return self.nome_produto
 

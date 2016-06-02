@@ -30,7 +30,7 @@ def Login(request):
         else:
             return render(request, "store/login_invalid.html", {'erro':1})
 
-    products = Produto.objects.order_by('id_produto') 
+    products = Produto.objects.filter(produto_indisponivel = False).order_by('id_produto') 
     paginator = Paginator(products, 16)  #lista 16 produtos
     page = request.GET.get('page')
     try:
@@ -48,7 +48,7 @@ def Login(request):
 def Search(request):
     if request.method == "GET":
         search = request.GET['search']
-        posts = Produto.objects.filter(nome_produto__contains = search)
+        posts = Produto.objects.filter(nome_produto__contains = search, produto_indisponivel = False)
         return render(request, "store/search.html", {'posts': posts})
 
     posts = Produto.objects.order_by('id_produto')
@@ -59,12 +59,15 @@ def Logout(request, id):
     cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
     for x in cart:
         x.id_status = Statu.objects.get(id_status=3)
+        produto = Produto.objects.get(nome_produto = x.produto_compra)
+        produto.qntd_produto = Produto.objects.get(nome_produto = x.produto_compra).qntd_produto + x.qntd_produtos
+        produto.save()
         x.save()
     return HttpResponseRedirect('/')
 
 @login_required
 def Home(request):
-    products = Produto.objects.order_by('id_produto') 
+    products = Produto.objects.filter(produto_indisponivel = False).order_by('id_produto') 
     paginator = Paginator(products, 16)
     page = request.GET.get('page')
     try:
@@ -86,6 +89,8 @@ def Buy(request, pk, id):
     #add funionalidades carrinho
     if request.method == "POST":
         produto = get_object_or_404(Produto, pk=pk)
+        produto.qntd_produto = Produto.objects.get(pk=pk).qntd_produto - 1
+        produto.save()
         cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
         produto_existente = False
         form = CarrinhoForm()
@@ -149,10 +154,11 @@ def ExibicaoCarrinho(request, id):
 @login_required
 def CancelaCompra(request, pk, id):
     produto = get_object_or_404(Produto, pk=pk)
-    cart = Carrinho.objects.filter(id_status=2, usuario_compra=id, produto_compra = produto)
-    for x in cart:
-        x.id_status = Statu.objects.get(id_status=3)
-        x.save()
+    cart = Carrinho.objects.get(id_status=2, usuario_compra=id, produto_compra = produto)
+    cart.id_status = Statu.objects.get(id_status=3)
+    produto.qntd_produto = Produto.objects.get(pk=pk).qntd_produto + cart.qntd_produtos
+    produto.save()
+    cart.save()
     return HttpResponseRedirect('/carrinho/%s/'%id)
 
 @login_required
@@ -207,7 +213,7 @@ def custom_404(request):
 
 def Categories(request, categoria):
     nome = categoria
-    products = Produto.objects.filter(categoria_produto = nome)
+    products = Produto.objects.filter(categoria_produto = nome, produto_indisponivel = False)
     paginator = Paginator(products, 16)
     page = request.GET.get('page')
     try:
@@ -219,21 +225,6 @@ def Categories(request, categoria):
 
     paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
     return render(request, "store/store.html", {'posts': posts, 'paginas': paginas})
-
-def Categories2(request, categoria):
-    nome = categoria
-    products = Produto.objects.filter(categoria_produto = nome)
-    paginator = Paginator(products, 16)
-    page = request.GET.get('page')
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-
-    paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
-    return render(request, "store/post_list.html", {'posts': posts, 'paginas': paginas})
 
 def Sobre(request):
     return render(request, "store/sobre.html", {})
