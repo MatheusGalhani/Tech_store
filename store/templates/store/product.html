@@ -90,7 +90,7 @@
 						<div class="col-md-10 content">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									{% if user.is_authenticated %}
+									{% if user.is_authenticated  and post.qntd_produto > 0%}
 									<form method='POST' class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.Buy' pk=post.pk id=user.id %}">{% csrf_token %}
 										<strong>{{ post.nome_produto }}</strong>	
 										<button type="submit" class="btn btn-primary  btn-sm btn3d logout">Adicionar

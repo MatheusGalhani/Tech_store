@@ -137,14 +137,23 @@
 												<td>   </td>
 												<td>   </td>
 												<td><h5>Frete</h5></td>
+												{% if cart %}
 												<td class="text-right"><h5><strong>R$ 12.00</strong></h5></td>
+												{%else%}
+												<td class="text-right"><h5><strong>R$ 0.00</strong></h5></td>
+												{%endif%}
 											</tr>
 											<tr>
 												<td>   </td>
 												<td>   </td>
 												<td>   </td>
 												<td><h3>Total</h3></td>
+												{% if cart %}
 												<td class="text-right"><h4><strong>R$ {{total}}</strong></h4></td>
+												{%else%}
+												<td class="text-right"><h4><strong>R$ 0.00</strong></h4></td>
+												{%endif%}
+												
 											</tr>
 											<tr>
 												<td>   </td>
