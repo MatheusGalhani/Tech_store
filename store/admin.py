@@ -30,6 +30,13 @@ class CarrinhoAdmin(admin.ModelAdmin):
     list_filter = ['created_date','usuario_compra', 'id_status']
     search_fields = ['produto_compra']
     save_on_top = False
+    readonly_fields = ['id_carrinho', 'id_compra', 'usuario_compra','qntd_produtos', 'created_date', 'produto_compra', 'preco_total', 'id_status']
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+    
 
 admin.site.register(Produto, ProdutoAdmin)
 admin.site.register(Statu, StatuAdmin)
