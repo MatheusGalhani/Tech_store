@@ -21,7 +21,7 @@ def Login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                if user.is_superuser:
+                if user.is_staff:
                     return HttpResponseRedirect('/admin')
                 else:
                     return HttpResponseRedirect(next)
