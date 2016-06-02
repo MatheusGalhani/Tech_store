@@ -86,6 +86,7 @@ class Statu(models.Model):
 
 class Carrinho(models.Model):
 	id_carrinho = models.AutoField(primary_key=True)
+	id_compra = models.CharField(verbose_name=u'Numero Pedido', max_length=10000)
 	usuario_compra = models.ForeignKey('auth.User')
 	qntd_produtos = models.IntegerField(verbose_name=u'Quantidade de produtos')
 	created_date = models.DateTimeField(default=timezone.now)
@@ -94,6 +95,8 @@ class Carrinho(models.Model):
 	id_status = models.ForeignKey('Statu')
 	def __int__(self):
 		return self.id_carrinho
+	def __str__(self):
+		return self.id_compra
 
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)

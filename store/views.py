@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import CarrinhoForm
 from django.contrib.auth.models import User
 from random import choice
+from datetime import datetime
 # Create your views here.
 #return render(request, "store/error_page_404.html", {})
 def Login(request):
@@ -90,6 +91,11 @@ def Buy(request, pk, id):
         form = CarrinhoForm()
         carrinho = form.save(commit=False)
         user = User.objects.get(id=id)
+        if cart:
+            numero_pedido = cart[0].id_compra
+        else:
+            numero_pedido = "".join([d for d in str(str(datetime.now())) if d.isdigit()])
+            numero_pedido = str(id)+""+ numero_pedido
         for x in cart:
             if x.produto_compra == get_object_or_404(Produto, pk=pk):
                 produto_existente = True
@@ -106,6 +112,7 @@ def Buy(request, pk, id):
             carrinho.produto_compra = produto
             carrinho.preco_total = produto.preco_produto * carrinho.qntd_produtos 
             carrinho.id_status = get_object_or_404(Statu, pk=2)
+            carrinho.id_compra = numero_pedido
             carrinho.save()
         return HttpResponseRedirect('/carrinho/%s/'%id)
     return render(request, "store/cart.html", {})
