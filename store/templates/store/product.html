@@ -42,63 +42,77 @@
 
 						</form>
 						{% endif %}
-					<form class="search-form" method="get" action="{% url 'store.views.Search' %}">
-						<div class="form-group has-feedback">
-							<label for="search" class="sr-only">Search</label>
-							<input type="text" class="form-control" name="search" id="search" placeholder="search">
-							<span class="glyphicon glyphicon-search form-control-feedback"></span>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div id="wrapper">
-				<div class="cart-icon-top">
-				</div>
-
-				<div class="cart-icon-bottom">
-				</div>
-				<div id="header">	
-					<ul>
-						<li><a href="{% url 'store.views.Home' %}">HOME</a></li>
-						<li><a href="{% url 'store.views.Sobre' %}">SOBRE</a></li>
-						<li><a href="{% url 'store.views.Suporte' %}">SUPORTE</a></li>
-						{% if user.is_authenticated %}
-						<li><a href="{% url 'store.views.Historico' id=user.id %}">MINHAS COMPRAS</a></li>
-						{% endif %}                                      
-					</ul>		
-				</div>
-				<div id="sidebar">
-					<h3>CATEGORIAS</h3>
-					<div class="checklist categories">
-						<ul>
-							<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
-						</ul>
+						<form class="search-form" method="get" action="{% url 'store.views.Search' %}">
+							<div class="form-group has-feedback">
+								<label for="search" class="sr-only">Search</label>
+								<input type="text" class="form-control" name="search" id="search" placeholder="search">
+								<span class="glyphicon glyphicon-search form-control-feedback"></span>
+							</div>
+						</form>
 					</div>
 				</div>
-				<div class="container-fluid main-container">
-					<div class="col-md-10 content">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<strong>{{ post.nome_produto }}</strong>
-							</div>
-							<div class="panel-body">
-								<p align="center"><img src="/media/{{post.imagem_produto}}" width="30%" height="30%" title={{ post.nome_produto }} border="1"/></p>
-								<p>{{ post.descricao_produto|linebreaks }}</p>
-							</div>
-						</div>
-					</div>	
-				</div>			
-			</div>
-		</body>
+				<div id="wrapper">
+					<div class="cart-icon-top">
+					</div>
 
-		</html>
+					<div class="cart-icon-bottom">
+					</div>
+					<div id="header">	
+						<ul>
+							<li><a href="{% url 'store.views.Home' %}">HOME</a></li>
+							<li><a href="{% url 'store.views.Sobre' %}">SOBRE</a></li>
+							<li><a href="{% url 'store.views.Suporte' %}">SUPORTE</a></li>
+							{% if user.is_authenticated %}
+							<li><a href="{% url 'store.views.Historico' id=user.id %}">MINHAS COMPRAS</a></li>
+							<li><a href="{% url 'store.views.ExibicaoCarrinho' id=user.id %}">MEU CARRINHO</a></li>
+							{% endif %}                                      
+						</ul>		
+					</div>
+					<div id="sidebar">
+						<h3>CATEGORIAS</h3>
+						<div class="checklist categories">
+							<ul>
+								<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="container-fluid main-container">
+						<div class="col-md-10 content">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									{% if user.is_authenticated %}
+									<form method='POST' class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.Buy' pk=post.pk id=user.id %}">{% csrf_token %}
+										<strong>{{ post.nome_produto }}</strong>	
+										<button type="submit" class="btn btn-primary  btn-sm btn3d logout">Adicionar
+											<span class="glyphicon glyphicon-shopping-cart"></span>
+										</button>
+									</form>
+									{% else %}
+									<strong>{{ post.nome_produto }}</strong>	
+									<a class="btn btn-primary  btn-sm btn3d logout">
+										Adicionar<span class="glyphicon glyphicon-shopping-cart"></span>
+									</a>
+									{% endif %}  
+									
+								</div>
+								<div class="panel-body">
+									<p align="center"><img src="/media/{{post.imagem_produto}}" width="30%" height="30%" title={{ post.nome_produto }} border="1"/></p>
+									<p>{{ post.descricao_produto|linebreaks }}</p>
+								</div>
+							</div>
+						</div>	
+					</div>			
+				</div>
+			</body>
+
+			</html>

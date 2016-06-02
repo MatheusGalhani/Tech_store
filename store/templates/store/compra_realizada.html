@@ -64,6 +64,7 @@
 						<li><a href="{% url 'store.views.Suporte' %}">SUPORTE</a></li>
 						{% if user.is_authenticated %}
 						<li><a href="{% url 'store.views.Historico' id=user.id %}">MINHAS COMPRAS</a></li>
+						<li><a href="{% url 'store.views.ExibicaoCarrinho' id=user.id %}">MEU CARRINHO</a></li>
 						{% endif %}                                      
 					</ul>		
 				</div>
