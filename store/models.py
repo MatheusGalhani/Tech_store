@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from store.base import CPF, CEP
-
+from django.core.validators import MinValueValidator
 #My choices
 ESTADO_CHOICES = (
 	(u'acre', u'Acre'),
@@ -73,7 +73,7 @@ class Produto(models.Model):
 	imagem_produto = models.FileField(verbose_name=u'Foto do produto')
 	categoria_produto = models.CharField(choices= CATEGORIA_CHOICES, max_length=200, verbose_name=u'Categoria')
 	preco_produto = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço da venda')
-	qntd_produto = models.IntegerField(verbose_name=u'Quantidade de estoque')
+	qntd_produto = models.IntegerField(verbose_name=u'Quantidade de estoque', validators=[MinValueValidator(0)])
 	valor_compra = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço da compra')
 	produto_indisponivel = models.BooleanField()
 	def __str__(self):
