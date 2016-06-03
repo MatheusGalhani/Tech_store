@@ -68,13 +68,13 @@ def validate_cep(value):
 # Create your models here.
 class Produto(models.Model):
 	id_produto = models.AutoField(primary_key=True)
-	nome_produto = models.CharField(max_length=160, unique=True)
-	descricao_produto = models.TextField()
-	imagem_produto = models.FileField(verbose_name=u'Foto do produto')
+	nome_produto = models.CharField(max_length=160, unique=True, verbose_name=u'Nome')
+	descricao_produto = models.TextField(verbose_name=u'Descrição')
+	imagem_produto = models.FileField(verbose_name=u'Imagem')
 	categoria_produto = models.CharField(choices= CATEGORIA_CHOICES, max_length=200, verbose_name=u'Categoria')
-	preco_produto = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço da venda')
+	preco_produto = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço de venda')
 	qntd_produto = models.IntegerField(verbose_name=u'Quantidade de estoque', validators=[MinValueValidator(0)])
-	valor_compra = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço da compra')
+	valor_compra = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço de compra')
 	produto_indisponivel = models.BooleanField()
 	def __str__(self):
 		return self.nome_produto
@@ -88,12 +88,12 @@ class Statu(models.Model):
 class Carrinho(models.Model):
 	id_carrinho = models.AutoField(primary_key=True)
 	id_compra = models.CharField(verbose_name=u'Numero Pedido', max_length=10000)
-	usuario_compra = models.ForeignKey('auth.User')
+	usuario_compra = models.ForeignKey('auth.User', verbose_name=u'Usuario')
 	qntd_produtos = models.IntegerField(verbose_name=u'Quantidade de produtos')
-	created_date = models.DateTimeField(default=timezone.now)
+	created_date = models.DateTimeField(default=timezone.now, verbose_name=u'Data de compra')
 	produto_compra = models.ForeignKey('Produto')
 	preco_total = models.DecimalField(max_digits=15, decimal_places=2, verbose_name=u'Preço Total')
-	id_status = models.ForeignKey('Statu')
+	id_status = models.ForeignKey('Statu', verbose_name=u'Status')
 	def __int__(self):
 		return self.id_carrinho
 	def __str__(self):
@@ -101,12 +101,12 @@ class Carrinho(models.Model):
 
 class Contato(models.Model):
 	id_contato = models.AutoField(primary_key=True)
-	author_usuario = models.ForeignKey('auth.User', verbose_name=u'Usuario', unique=True,)
+	author_usuario = models.ForeignKey('auth.User', verbose_name=u'Usuario', unique=True)
 	nome_completo = models.CharField(max_length=260)
 	cpf_contato = models.CharField(unique=True, verbose_name=u'CPF', max_length=14, validators=[validate_cpf])
-	telefone_contato = models.CharField(max_length=60)
+	telefone_contato = models.CharField(max_length=60, verbose_name=u'Telefone')
 	email_contato = models.EmailField(max_length = 100, unique=True, verbose_name=u'EMAIL')
-	data_nascimento = models.DateField()
+	data_nascimento = models.DateField(verbose_name=u'Data de nascimento')
 	estado_pais =  models.CharField(choices= ESTADO_CHOICES, max_length=200, verbose_name=u'Estado')
 	cidade_estado = models.CharField(max_length=200, verbose_name=u'Cidade')
 	endereco_completo = models.CharField(max_length=400, verbose_name=u'Endereço Completo')

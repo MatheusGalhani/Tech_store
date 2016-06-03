@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/error.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
@@ -85,6 +86,13 @@
 					</div>
 				</div>
 				<div class="container-fluid">
+					{% if erro == 0 %}
+					<div class="error-notice">
+						<div class="oaerror warning">
+						<p align="center"><strong>Atenção</strong> - Usuario precisa estar logado para realizar compras. Favor entrar em contato com o suporte.</p>
+						</div>
+					</div>
+					{% endif %}
 					{% for post in posts %}
 					{% if post.qntd_produto > 0 %}
 					<div class="col-md-2">
@@ -94,10 +102,20 @@
 								<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
 							</div>
 							<div class="productprice">
-								<div class="pull-right">
-									<a href="/home/" class="btn btn-primary  btn-sm btn3d" role="button">Adicionar <span class="glyphicon glyphicon-shopping-cart"></span></a>
-								</div>
-								<div class="pricetext"> <p> R$ {{ post.preco_produto }} </p> </div>
+								<div class="pricetext">  R$ {{ post.preco_produto }}</div>
+								{% if user.is_authenticated %}
+								<form method='POST' class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.Buy' pk=post.pk id=user.id %}">{% csrf_token %}
+									<p align="right"><button type="submit" class="btn btn-primary  btn-sm btn3d">Adicionar
+										<span class="glyphicon glyphicon-shopping-cart"></span>
+									</button></p>
+								</form>
+								{% else %}
+								<form method='POST' class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.CompraIndisponivel' id='n_logado' %}">{% csrf_token %}
+									<p align="right"><button type="submit" class="btn btn-primary  btn-sm btn3d">Adicionar
+										<span class="glyphicon glyphicon-shopping-cart"></span>
+									</button></p>
+								</form>
+								{% endif %}
 							</div>
 						</div>
 					</div>

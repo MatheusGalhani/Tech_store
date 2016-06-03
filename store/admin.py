@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import Produto, Statu, Contato, Carrinho
+from daterange_filter.filter import DateRangeFilter
+
 
 class ProdutoAdmin(admin.ModelAdmin):
     model = Produto
@@ -26,8 +28,8 @@ class ContatoAdmin(admin.ModelAdmin):
 
 class CarrinhoAdmin(admin.ModelAdmin):
     model = Carrinho
-    list_display = ['id_carrinho','usuario_compra', 'produto_compra', 'id_status']
-    list_filter = ['created_date','usuario_compra', 'id_status']
+    list_display = ['id_compra','usuario_compra', 'produto_compra', 'id_status']
+    list_filter = [('created_date',DateRangeFilter),'created_date', 'usuario_compra', 'id_status']
     search_fields = ['produto_compra']
     save_on_top = False
     readonly_fields = ['id_carrinho', 'id_compra', 'usuario_compra','qntd_produtos', 'created_date', 'produto_compra', 'preco_total', 'id_status']
@@ -36,6 +38,7 @@ class CarrinhoAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
     
 
 admin.site.register(Produto, ProdutoAdmin)

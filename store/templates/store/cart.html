@@ -41,142 +41,137 @@
 
 						</form>
 						{% endif %}
-					<form class="search-form" method="get" action="{% url 'store.views.Search' %}">
-						<div class="form-group has-feedback">
-							<label for="search" class="sr-only">Search</label>
-							<input type="text" class="form-control" name="search" id="search" placeholder="search">
-							<span class="glyphicon glyphicon-search form-control-feedback"></span>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div id="wrapper">
-				<div class="cart-icon-top">
-				</div>
-
-				<div class="cart-icon-bottom">
-				</div>
-				<div id="header">	
-					<ul>
-						<li><a href="{% url 'store.views.Home' %}">HOME</a></li>
-						<li><a href="{% url 'store.views.Sobre' %}">SOBRE</a></li>
-						<li><a href="{% url 'store.views.Suporte' %}">SUPORTE</a></li>
-						{% if user.is_authenticated %}
-						<li><a href="{% url 'store.views.Historico' id=user.id %}">MINHAS COMPRAS</a></li>
-						<li><a href="{% url 'store.views.ExibicaoCarrinho' id=user.id %}">MEU CARRINHO</a></li>
-						{% endif %}                                  
-					</ul>		
-				</div>
-				<div id="sidebar">
-					<h3>CATEGORIAS</h3>
-					<div class="checklist categories">
-						<ul>
-							<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
-							<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
-						</ul>
+						<form class="search-form" method="get" action="{% url 'store.views.Search' %}">
+							<div class="form-group has-feedback">
+								<label for="search" class="sr-only">Search</label>
+								<input type="text" class="form-control" name="search" id="search" placeholder="search">
+								<span class="glyphicon glyphicon-search form-control-feedback"></span>
+							</div>
+						</form>
 					</div>
 				</div>
-				
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-12 col-md-10 col-md-offset-1">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th>Produto</th>
-										<th>Quantidade</th>
-										<th class="text-center">Preço</th>
-										<th class="text-center">Total</th>
-										<th> </th>
-									</tr>
-								</thead>
-								<tbody>
-									{% for post in posts %}
-									{% for carrinho in cart %}
-									{% if carrinho.produto_compra == post %}
-									<tr>
-										<td class="col-sm-8 col-md-6">
-											<div class="media">
-												<a class="thumbnail pull-left" href="#"> <img class="media-object" src="/media/{{post.imagem_produto}}" style="width: 72px; height: 72px;"> </a>
-												<div class="media-body">
-													<h4 class="media-heading">{{ post.nome_produto }}</h4>
-													<span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
-												</div>
-											</div></td>
-											<td class="col-sm-1 col-md-1" style="text-align: center">
-												<h4 class="media-heading">{{carrinho.qntd_produtos}}</h4>
-											</td>
-											<td class="col-sm-1 col-md-1 text-center"><strong>R$ {{ post.preco_produto }}</strong></td>
-											<td class="col-sm-1 col-md-1 text-center"><strong>R$ {{ carrinho.preco_total }}</strong></td>
-											<td class="col-sm-1 col-md-1">
-												<a href="{% url 'store.views.CancelaCompra' pk=post.pk id=user.id %}"><button type="button" class="btn btn-danger">
-													<span class="glyphicon glyphicon-remove"></span> Remove
-												</button></a></td>
-											</tr>
-											{% endif %}
-											{% endfor %}
-											{% endfor %}
-											<tr>
-												<td>   </td>
-												<td>   </td>
-												<td>   </td>
-												<td><h5>Subtotal</h5></td>
-												<td class="text-right"><h5><strong>R$ {{subtotal}}</strong></h5></td>
-											</tr>
-											<tr>
-												<td>   </td>
-												<td>   </td>
-												<td>   </td>
-												<td><h5>Frete</h5></td>
-												{% if cart %}
-												<td class="text-right"><h5><strong>R$ 12.00</strong></h5></td>
-												{%else%}
-												<td class="text-right"><h5><strong>R$ 0.00</strong></h5></td>
-												{%endif%}
-											</tr>
-											<tr>
-												<td>   </td>
-												<td>   </td>
-												<td>   </td>
-												<td><h3>Total</h3></td>
-												{% if cart %}
-												<td class="text-right"><h4><strong>R$ {{total}}</strong></h4></td>
-												{%else%}
-												<td class="text-right"><h4><strong>R$ 0.00</strong></h4></td>
-												{%endif%}
-												
-											</tr>
-											<tr>
-												<td>   </td>
-												<td>   </td>
-												<td>   </td>
-												<td>
-													<a href="/home/"><button type="button" class="btn btn-default">
-														<span class="glyphicon glyphicon-shopping-cart" ></span> Adicione mais produtos ao carrinho
+				<div id="wrapper">
+					<div class="cart-icon-top">
+					</div>
+
+					<div class="cart-icon-bottom">
+					</div>
+					<div id="header">	
+						<ul>
+							<li><a href="{% url 'store.views.Home' %}">HOME</a></li>
+							<li><a href="{% url 'store.views.Sobre' %}">SOBRE</a></li>
+							<li><a href="{% url 'store.views.Suporte' %}">SUPORTE</a></li>
+							{% if user.is_authenticated %}
+							<li><a href="{% url 'store.views.Historico' id=user.id %}">MINHAS COMPRAS</a></li>
+							<li><a href="{% url 'store.views.ExibicaoCarrinho' id=user.id %}">MEU CARRINHO</a></li>
+							{% endif %}                                  
+						</ul>		
+					</div>
+					<div id="sidebar">
+						<h3>CATEGORIAS</h3>
+						<div class="checklist categories">
+							<ul>
+								<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
+								<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="container-fluid main-container">
+						<div class="col-md-9 content">
+							<div class="panel panel-default">
+								<table class="table table-condensed table-hover">
+									<thead>
+										<tr>
+											<th>Produto</th>
+											<th>Quantidade</th>
+											<th class="text-center">Preço</th>
+											<th class="text-center">Total</th>
+											<th> </th>
+										</tr>
+									</thead>
+
+									{% if cart %}
+									<tbody>
+										{% for post in posts %}
+										{% for carrinho in cart %}
+										{% if carrinho.produto_compra == post %}
+										<tr>
+											<td class="col-sm-8 col-md-6">
+												<div class="media">
+													<a class="thumbnail pull-left" href="#"> <img class="media-object" src="/media/{{post.imagem_produto}}" style="width: 72px; height: 72px;"> </a>
+													<div class="media-body">
+														<h4 class="media-heading">{{ post.nome_produto }}</h4>
+														<span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+													</div>
+												</div></td>
+												<td class="col-sm-1 col-md-1" style="text-align: center">
+													<h4 class="media-heading">{{carrinho.qntd_produtos}}</h4>
+												</td>
+												<td class="col-sm-1 col-md-1 text-center"><strong>R$ {{ post.preco_produto }}</strong></td>
+												<td class="col-sm-1 col-md-1 text-center"><strong>R$ {{ carrinho.preco_total }}</strong></td>
+												<td class="col-sm-1 col-md-1">
+													<a href="{% url 'store.views.CancelaCompra' pk=post.pk id=user.id %}"><button type="button" class="btn btn-danger">
+														<span class="glyphicon glyphicon-remove"></span> Remove
 													</button></a></td>
+												</tr>
+												{% endif %}
+												{% endfor %}
+												{% endfor %}
+												<tr>
+													<td>   </td>
+													<td>   </td>
+													<td>   </td>
+													<td><h5>Subtotal</h5></td>
+													<td class="text-right"><h5><strong>R$ {{subtotal}}</strong></h5></td>
+												</tr>
+												<tr>
+													<td>   </td>
+													<td>   </td>
+													<td>   </td>
+													<td><h5>Frete</h5></td>
+													<td class="text-right"><h5><strong>R$ 12.00</strong></h5></td>
+												</tr>
+												<tr>
+													<td>   </td>
+													<td>   </td>
+													<td>   </td>
+													<td><h3>Total</h3></td>
+													<td class="text-right"><h4><strong>R$ {{total}}</strong></h4></td>
+
+												</tr>
+												<tr>
+													<td>   </td>
+													<td>   </td>
+													<td>   </td>
 													<td>
-														<a href="{% url 'store.views.FinalizaCompra' id=user.id %}"><button type="button" class="btn btn-success">
-															Finalizar Compra <span class="glyphicon glyphicon-play"></span>
+														<a href="/home/"><button type="button" class="btn btn-default">
+															<span class="glyphicon glyphicon-shopping-cart" ></span> Adicione mais produtos ao carrinho
 														</button></a></td>
-													</tr>
-												</tbody>
-											</table>
+														<td>
+															<a href="{% url 'store.views.FinalizaCompra' id=user.id %}"><button type="button" class="btn btn-success">
+																Finalizar Compra <span class="glyphicon glyphicon-play"></span>
+															</button></a></td>
+														</tr>
+													</tbody>
+													{%endif%}
+												</table>
+											</div>
 										</div>
 									</div>
+
 								</div>
-
 							</div>
-						</div>
 
-					</body>
+						</body>
 
-					</html>
+						</html>
