@@ -232,20 +232,17 @@ def Sobre(request):
 def Suporte(request):
     return render(request, "store/suporte.html", {})
 
-def CompraIndisponivel(request, id):
-    if id == 'n_logado':
-        erro = 0
-        products = Produto.objects.filter(produto_indisponivel = False).order_by('id_produto') 
-        paginator = Paginator(products, 16)
-        page = request.GET.get('page')
-        try:
-            posts = paginator.page(page)
-        except PageNotAnInteger:
-            posts = paginator.page(1)
-        except EmptyPage:
-            posts = paginator.page(paginator.num_pages)
-
-        paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
-        return render(request, "store/post_list.html", {'posts': posts, 'paginas': paginas, 'erro': erro})  
-    return render(request, "store/store.html", {'posts': posts, 'paginas': paginas})
+def CompraIndisponivel(request):
+    erro = 0
+    products = Produto.objects.filter(produto_indisponivel = False).order_by('id_produto') 
+    paginator = Paginator(products, 16)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
+    return render(request, "store/store.html", {'posts': posts, 'paginas': paginas, 'erro': erro})
     

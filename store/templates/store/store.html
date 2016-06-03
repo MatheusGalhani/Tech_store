@@ -88,13 +88,13 @@
 						</div>
 					</div>
 					<div class="container-fluid">
-					{% if erro == 0 %}
-					<div class="error-notice">
-						<div class="oaerror warning">
-						<p align="center"><strong>Atenção</strong> - Usuario precisa estar logado para realizar compras. Favor entrar em contato com o suporte.</p>
+						{% if erro == 0 %}
+						<div class="error-notice">
+							<div class="oaerror warning">
+								<p align="center"><strong>Atenção</strong> - Usuario precisa estar logado para realizar compras. Favor entrar em contato com o suporte.</p>
+							</div>
 						</div>
-					</div>
-					{% endif %}
+						{% endif %}
 						{% for post in posts %}
 						{% if post.qntd_produto > 0 %}
 						<div class="col-md-2">
@@ -112,7 +112,7 @@
 										</button></p>
 									</form>
 									{% else %}
-									<form method='POST' class="navbar-form navbar-top-right" role="form" action="{% url 'views.CompraIndisponivel' id='n_logado' %}>{% csrf_token %}
+									<form method='POST' class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.CompraIndisponivel' %}">{% csrf_token %}
 										<p align="right"><button type="submit" class="btn btn-primary  btn-sm btn3d">Adicionar
 											<span class="glyphicon glyphicon-shopping-cart"></span>
 										</button></p>

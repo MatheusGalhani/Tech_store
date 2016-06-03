@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^compras_realizadas/(?P<id>[0-9]+)/$', views.Historico),
     url(r'^sobre/$', views.Sobre),
     url(r'^suporte/$', views.Suporte),
-    url(r'^compraindisponivel/(?P<id>\w+)/$', views.CompraIndisponivel),
+    url(r'^compraindisponivel/$', views.CompraIndisponivel),
 ]
 
 handler404 = 'views.custom_404'
