@@ -21,4 +21,4 @@ urlpatterns = [
     url(r'^compraindisponivel/$', views.CompraIndisponivel),
 ]
 
-handler404 = 'views.custom_404'
+handler404 = 'views.error404'

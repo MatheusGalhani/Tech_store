@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/info.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/produto_unico.css' %}">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
@@ -93,7 +94,7 @@
 									{% if user.is_authenticated  and post.qntd_produto > 0%}
 									<form method='POST' class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.Buy' pk=post.pk id=user.id %}">{% csrf_token %}
 										<strong>{{ post.nome_produto }}</strong>	
-										<button type="submit" class="btn btn-primary  btn-sm btn3d logout">Adicionar
+										<button type="submit" class="btn btn-primary  btn-sm btn3d">Adicionar
 											<span class="glyphicon glyphicon-shopping-cart"></span>
 										</button>
 									</form>

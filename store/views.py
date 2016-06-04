@@ -9,6 +9,8 @@ from .forms import CarrinhoForm
 from django.contrib.auth.models import User
 from random import choice
 from datetime import datetime
+from django.conf.urls import handler404
+
 # Create your views here.
 #return render(request, "store/error_page_404.html", {})
 def Login(request):
@@ -208,7 +210,7 @@ def Change(request):
             return render(request, "store/change_password.html", {'erro':1})
     return render(request, "store/change_password.html", {})
 
-def custom_404(request):
+def error404(request):
     return render(request, 'store/error_page_404.html', {})
 
 def Categories(request, categoria):
