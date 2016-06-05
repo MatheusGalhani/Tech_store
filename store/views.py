@@ -265,5 +265,5 @@ def CompraIndisponivel(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     paginas = [1 * str(i) for i in range(1,paginator.num_pages+1)]   
-    return render(request, "store/store.html", {'posts': posts, 'paginas': paginas, 'erro': erro})
+    return render(request, "store/post_list.html", {'posts': posts, 'paginas': paginas, 'erro': erro})
     
