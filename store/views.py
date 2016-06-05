@@ -98,78 +98,97 @@ def Buy(request, pk, id):
         form = CarrinhoForm()
         carrinho = form.save(commit=False)
         user = User.objects.get(id=id)
-        if cart:
-            numero_pedido = cart[0].id_compra
+        if user.is_staff:
+            return HttpResponseRedirect('/admin')
         else:
-            numero_pedido = "".join([d for d in str(str(datetime.now())) if d.isdigit()])
-            numero_pedido = str(id)+""+ numero_pedido
-        for x in cart:
-            if x.produto_compra == get_object_or_404(Produto, pk=pk):
-                produto_existente = True
-        if produto_existente:
-            cart = Carrinho.objects.filter(id_status=2, usuario_compra=id, produto_compra = produto)
+            if cart:
+                numero_pedido = cart[0].id_compra
+            else:
+                numero_pedido = "".join([d for d in str(str(datetime.now())) if d.isdigit()])
+                numero_pedido = str(id)+""+ numero_pedido
             for x in cart:
-                x.qntd_produtos = (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos)+1
-                x.save()
-                x.preco_total = produto.preco_produto * (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos) 
-                x.save()
-        else:
-            carrinho.usuario_compra = user
-            carrinho.qntd_produtos = 1
-            carrinho.produto_compra = produto
-            carrinho.preco_total = produto.preco_produto * carrinho.qntd_produtos 
-            carrinho.id_status = get_object_or_404(Statu, pk=2)
-            carrinho.id_compra = numero_pedido
-            carrinho.save()
-        return HttpResponseRedirect('/carrinho/%s/'%id)
+                if x.produto_compra == get_object_or_404(Produto, pk=pk):
+                    produto_existente = True
+            if produto_existente:
+                cart = Carrinho.objects.filter(id_status=2, usuario_compra=id, produto_compra = produto)
+                for x in cart:
+                    x.qntd_produtos = (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos)+1
+                    x.save()
+                    x.preco_total = produto.preco_produto * (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos) 
+                    x.save()
+            else:
+                carrinho.usuario_compra = user
+                carrinho.qntd_produtos = 1
+                carrinho.produto_compra = produto
+                carrinho.preco_total = produto.preco_produto * carrinho.qntd_produtos 
+                carrinho.id_status = get_object_or_404(Statu, pk=2)
+                carrinho.id_compra = numero_pedido
+                carrinho.save()
+            return HttpResponseRedirect('/carrinho/%s/'%id)
     return render(request, "store/cart.html", {})
 
 @login_required
 def Historico(request, id):
     cart = Carrinho.objects.filter(usuario_compra=id)
-    mylist = []
-    for x in cart:
-        mylist.append(x.produto_compra)
-    listapk = []
-    for x in mylist:
-        id = Produto.objects.filter(nome_produto__contains = x)
-        listapk.append(id[0].id_produto)
-    posts = Produto.objects.filter(id_produto__in = listapk)
-    return render(request, "store/historico.html", {'posts': posts, 'cart':cart})
+    user = User.objects.get(id=id)
+    if user.is_staff:
+        return HttpResponseRedirect('/admin')
+    else:
+        mylist = []
+        for x in cart:
+            mylist.append(x.produto_compra)
+        listapk = []
+        for x in mylist:
+            id = Produto.objects.filter(nome_produto__contains = x)
+            listapk.append(id[0].id_produto)
+        posts = Produto.objects.filter(id_produto__in = listapk)
+        return render(request, "store/historico.html", {'posts': posts, 'cart':cart})
 
 @login_required
 def ExibicaoCarrinho(request, id):
-    cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
-    mylist = []
-    subtotal = 0
-    for x in cart:
-        mylist.append(x.produto_compra)
-        subtotal += x.preco_total
-    total = subtotal + 12
-    listapk = []
-    for x in mylist:
-        id = Produto.objects.filter(nome_produto__contains = x)
-        listapk.append(id[0].id_produto)
-    posts = Produto.objects.filter(id_produto__in = listapk)
-    return render(request, "store/cart.html", {'posts': posts, 'cart':cart, 'subtotal': subtotal, 'total': total})
+    user = User.objects.get(id=id)
+    if user.is_staff:
+        return HttpResponseRedirect('/admin')
+    else:
+        cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+        mylist = []
+        subtotal = 0
+        for x in cart:
+            mylist.append(x.produto_compra)
+            subtotal += x.preco_total
+        total = subtotal + 12
+        listapk = []
+        for x in mylist:
+            id = Produto.objects.filter(nome_produto__contains = x)
+            listapk.append(id[0].id_produto)
+        posts = Produto.objects.filter(id_produto__in = listapk)
+        return render(request, "store/cart.html", {'posts': posts, 'cart':cart, 'subtotal': subtotal, 'total': total})
 
 @login_required
 def CancelaCompra(request, pk, id):
-    produto = get_object_or_404(Produto, pk=pk)
-    cart = Carrinho.objects.get(id_status=2, usuario_compra=id, produto_compra = produto)
-    cart.id_status = Statu.objects.get(id_status=3)
-    produto.qntd_produto = Produto.objects.get(pk=pk).qntd_produto + cart.qntd_produtos
-    produto.save()
-    cart.save()
-    return HttpResponseRedirect('/carrinho/%s/'%id)
+    user = User.objects.get(id=id)
+    if user.is_staff:
+        return HttpResponseRedirect('/admin')
+    else:
+        produto = get_object_or_404(Produto, pk=pk)
+        cart = Carrinho.objects.get(id_status=2, usuario_compra=id, produto_compra = produto)
+        cart.id_status = Statu.objects.get(id_status=3)
+        produto.qntd_produto = Produto.objects.get(pk=pk).qntd_produto + cart.qntd_produtos
+        produto.save()
+        cart.save()
+        return HttpResponseRedirect('/carrinho/%s/'%id)
 
 @login_required
 def FinalizaCompra(request, id):
-    cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
-    for x in cart:
-        x.id_status = Statu.objects.get(id_status=1)
-        x.save()
-    return render(request, "store/compra_realizada.html", {})
+    user = User.objects.get(id=id)
+    if user.is_staff:
+        return HttpResponseRedirect('/admin')
+    else:
+        cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+        for x in cart:
+            x.id_status = Statu.objects.get(id_status=1)
+            x.save()
+        return render(request, "store/compra_realizada.html", {})
 
 def Reset(request):
     aux = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz'

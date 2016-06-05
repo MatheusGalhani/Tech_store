@@ -110,7 +110,7 @@ class Contato(models.Model):
 	estado_pais =  models.CharField(choices= ESTADO_CHOICES, max_length=200, verbose_name=u'Estado')
 	cidade_estado = models.CharField(max_length=200, verbose_name=u'Cidade')
 	endereco_completo = models.CharField(max_length=400, verbose_name=u'Endereço Completo')
-	numero_casa = models.IntegerField(verbose_name=u'Número')
+	numero_casa = models.IntegerField(verbose_name=u'Número', validators=[MinValueValidator(0)])
 	bairro_endereco = models.CharField(max_length=400, verbose_name=u'Bairro')
 	complemento_endereco = models.CharField(blank=True,null=True, max_length=400, verbose_name=u'Complemento')
 	cep_endereco = models.CharField(max_length=50, verbose_name=u'CEP', validators=[validate_cep])

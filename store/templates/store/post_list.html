@@ -97,7 +97,9 @@
 					{% if post.qntd_produto > 0 %}
 					<div class="col-md-2">
 						<div class="productbox">
-							<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
+							<div class="imagemstore">
+								<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
+							</div>
 							<div class="producttitle">
 								<a href="{% url 'store.views.Product' pk=post.pk %}"><p>{{ post.nome_produto }}</p></a>
 							</div>
@@ -130,7 +132,9 @@
 									</div>
 								</div>
 								<div class="offer-content">
-									<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
+									<div class="imagemstore">
+										<img src="/media/{{post.imagem_produto}}" class="img-responsive" title={{ post.nome_produto }}/>
+									</div>
 								</div>
 							</div>
 							<div class="producttitle">
