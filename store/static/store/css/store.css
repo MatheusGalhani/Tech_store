@@ -71,6 +71,11 @@ small{
     color: #000000;
 }
 
+.panel-default{
+    max-width: auto;
+    min-width: auto;
+}
+
 .btn3d.logout{
     position:relative;
     top: -6px;

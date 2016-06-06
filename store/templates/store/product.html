@@ -13,7 +13,6 @@
 	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/info.css' %}">
-	<link rel="stylesheet" href="{% static 'store/css/produto_unico.css' %}">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
@@ -88,7 +87,7 @@
 						</div>
 					</div>
 					<div class="container-fluid main-container">
-						<div class="col-md-10 content">
+						<div class="col-md-9 content">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									{% if user.is_authenticated  and post.qntd_produto > 0%}
