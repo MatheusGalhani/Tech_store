@@ -67,7 +67,7 @@ def validate_cep(value):
 
 # Create your models here.
 class Produto(models.Model):
-	id_produto = models.AutoField(primary_key=True)
+	id_produto = models.AutoField(primary_key=True,verbose_name=u'Código do Produto')
 	nome_produto = models.CharField(max_length=160, unique=True, verbose_name=u'Nome')
 	descricao_produto = models.TextField(verbose_name=u'Descrição')
 	imagem_produto = models.FileField(verbose_name=u'Imagem')
@@ -100,7 +100,7 @@ class Carrinho(models.Model):
 		return self.id_compra
 
 class Contato(models.Model):
-	id_contato = models.AutoField(primary_key=True)
+	id_contato = models.AutoField(primary_key=True, verbose_name=u'Código do Cliente')
 	author_usuario = models.ForeignKey('auth.User', verbose_name=u'Usuario', unique=True)
 	nome_completo = models.CharField(max_length=260)
 	cpf_contato = models.CharField(unique=True, verbose_name=u'CPF', max_length=14, validators=[validate_cpf])
