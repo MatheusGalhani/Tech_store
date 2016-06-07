@@ -96,6 +96,7 @@
 										<th>PRODUTO</th>
 										<th>QUANTIDADE</th>
 										<th>TOTAL</th>
+										<th>DATA</th>
 										<th>STATUS</th>
 									</tr>
 								</thead>
@@ -106,6 +107,7 @@
 										<td>{{ carrinho.produto_compra }}</td>
 										<td>{{ carrinho.qntd_produtos }}</td>
 										<td>R$ {{carrinho.preco_total}}</td>
+										<td>{{ carrinho.created_date|date:"d/m/Y"  }}</td>
 										<td>{{carrinho.id_status}}</td>
 									</tr>
 									{% endfor %}

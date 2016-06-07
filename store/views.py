@@ -176,6 +176,12 @@ def CancelaCompra(request, pk, id):
         produto.qntd_produto = Produto.objects.get(pk=pk).qntd_produto + cart.qntd_produtos
         produto.save()
         cart.save()
+        numero_pedido = "".join([d for d in str(str(datetime.now())) if d.isdigit()])
+        numero_pedido = str(id)+""+ numero_pedido
+        carrinho = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+        for x in carrinho:
+            x.id_compra = numero_pedido
+            x.save()
         return HttpResponseRedirect('/carrinho/%s/'%id)
 
 @login_required
