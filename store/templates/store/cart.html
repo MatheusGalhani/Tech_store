@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
 	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/error.css' %}">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<link rel="icon" href="/media/icone.png" type="image/x-icon">
 	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
@@ -89,6 +90,7 @@
 					<div class="container-fluid main-container">
 						<div class="col-md-9 content">
 							<div class="panel panel-default">
+								{% if cart %}
 								<table class="table table-condensed table-hover">
 									<thead>
 										<tr>
@@ -100,7 +102,7 @@
 										</tr>
 									</thead>
 
-									{% if cart %}
+									
 									<tbody>
 										{% for post in posts %}
 										{% for carrinho in cart %}
@@ -170,10 +172,18 @@
 														<a href="{% url 'store.views.FinalizaCompra' id=user.id %}"><button type="button" class="btn btn-success">
 															Finalizar Compra <span class="glyphicon glyphicon-play"></span>
 														</button></a></td>
-													</tr>
+													</tr>													
 												</tbody>
-												{%endif%}
 											</table>
+											{%else%}
+											<div class="error-notice">
+												<div class="oaerror warning">
+													<td colspan="5" align="center">
+														<strong>Atenção</strong> - Nenhum item foi adicionado ao carrinho de compras!
+													</td>
+												</div>
+											</div>
+											{%endif%}
 										</div>
 									</div>
 								</div>
