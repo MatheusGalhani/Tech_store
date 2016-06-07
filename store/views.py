@@ -128,6 +128,68 @@ def Buy(request, pk, id):
     return render(request, "store/cart.html", {})
 
 @login_required
+def Add(request, pk, id):
+    produto = get_object_or_404(Produto, pk=pk)
+    produto.qntd_produto = Produto.objects.get(pk=pk).qntd_produto - 1
+    produto.save()
+    cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+    produto_existente = False
+    form = CarrinhoForm()
+    carrinho = form.save(commit=False)
+    user = User.objects.get(id=id)
+    if user.is_staff:
+        return HttpResponseRedirect('/admin')
+    else:
+        if cart:
+            numero_pedido = cart[0].id_compra
+        else:
+            numero_pedido = "".join([d for d in str(str(datetime.now())) if d.isdigit()])
+            numero_pedido = str(id)+""+ numero_pedido
+        for x in cart:
+            if x.produto_compra == get_object_or_404(Produto, pk=pk):
+                produto_existente = True
+        if produto_existente:
+            cart = Carrinho.objects.filter(id_status=2, usuario_compra=id, produto_compra = produto)
+            for x in cart:
+                x.qntd_produtos = (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos)+1
+                x.save()
+                x.preco_total = produto.preco_produto * (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos) 
+                x.save()
+        return HttpResponseRedirect('/carrinho/%s/'%id)
+    return render(request, "store/cart.html", {})
+
+@login_required
+def Minus(request, pk, id):
+    produto = get_object_or_404(Produto, pk=pk)
+    produto.qntd_produto = Produto.objects.get(pk=pk).qntd_produto + 1
+    produto.save()
+    cart = Carrinho.objects.filter(id_status=2, usuario_compra=id)
+    produto_existente = False
+    form = CarrinhoForm()
+    carrinho = form.save(commit=False)
+    user = User.objects.get(id=id)
+    if user.is_staff:
+        return HttpResponseRedirect('/admin')
+    else:
+        if cart:
+            numero_pedido = cart[0].id_compra
+        else:
+            numero_pedido = "".join([d for d in str(str(datetime.now())) if d.isdigit()])
+            numero_pedido = str(id)+""+ numero_pedido
+        for x in cart:
+            if x.produto_compra == get_object_or_404(Produto, pk=pk):
+                produto_existente = True
+        if produto_existente:
+            cart = Carrinho.objects.filter(id_status=2, usuario_compra=id, produto_compra = produto)
+            for x in cart:
+                x.qntd_produtos = (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos)-1
+                x.save()
+                x.preco_total = produto.preco_produto * (Carrinho.objects.get(id_carrinho = x.id_carrinho).qntd_produtos) 
+                x.save()
+        return HttpResponseRedirect('/carrinho/%s/'%id)
+    return render(request, "store/cart.html", {})
+
+@login_required
 def Historico(request, id):
     cart = Carrinho.objects.filter(usuario_compra=id)
     user = User.objects.get(id=id)

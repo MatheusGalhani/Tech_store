@@ -115,63 +115,72 @@
 													</div>
 												</div></td>
 												<td class="col-sm-1 col-md-1" style="text-align: center">
-													<h4 class="media-heading">{{carrinho.qntd_produtos}}</h4>
+													<h4 class="media-heading">
+														{{carrinho.qntd_produtos}}
+
+													</h4>
 												</td>
 												<td class="col-sm-1 col-md-1 text-center"><strong>R$ {{ post.preco_produto }}</strong></td>
 												<td class="col-sm-1 col-md-1 text-center"><strong>R$ {{ carrinho.preco_total }}</strong></td>
 												<td class="col-sm-1 col-md-1">
-													<a href="{% url 'store.views.CancelaCompra' pk=post.pk id=user.id %}"><button type="button" class="btn btn-danger">
-														<span class="glyphicon glyphicon-remove"></span> Remover
-													</button></a></td>
-												</tr>
-												{% endif %}
-												{% endfor %}
-												{% endfor %}
-												<tr>
-													<td>   </td>
-													<td>   </td>
-													<td>   </td>
-													<td><h5>Subtotal</h5></td>
-													<td class="text-right"><h5><strong>R$ {{subtotal}}</strong></h5></td>
-												</tr>
-												<tr>
-													<td>   </td>
-													<td>   </td>
-													<td>   </td>
-													<td><h5>Frete</h5></td>
-													<td class="text-right"><h5><strong>R$ 12.00</strong></h5></td>
-												</tr>
-												<tr>
-													<td>   </td>
-													<td>   </td>
-													<td>   </td>
-													<td><h3>Total</h3></td>
-													<td class="text-right"><h4><strong>R$ {{total}}</strong></h4></td>
-
-												</tr>
-												<tr>
-													<td>   </td>
-													<td>   </td>
-													<td>   </td>
-													<td>
-														<a href="/home/"><button type="button" class="btn btn-default">
-															<span class="glyphicon glyphicon-shopping-cart" ></span> Adicione mais produtos ao carrinho
-														</button></a></td>
-														<td>
-															<a href="{% url 'store.views.FinalizaCompra' id=user.id %}"><button type="button" class="btn btn-success">
-																Finalizar Compra <span class="glyphicon glyphicon-play"></span>
-															</button></a></td>
-														</tr>
-													</tbody>
+													<a href="{% url 'store.views.Add' pk=post.pk id=user.id %}" data-toggle="modal" data-target="#myModal" class="btn btn-circle-micro btn-success"><span class="glyphicon glyphicon-plus"></span> </a>
+													{%if carrinho.qntd_produtos > 1 %}
+													<a href="{% url 'store.views.Minus' pk=post.pk id=user.id %}" data-toggle="modal" data-target="#myModal" class="btn btn-circle-micro btn-warning"><span class="glyphicon glyphicon-minus"></span></a>
 													{%endif%}
-												</table>
-											</div>
+													{%if carrinho.qntd_produtos = 1 %}
+													<a href="{% url 'store.views.CancelaCompra' pk=post.pk id=user.id %}" data-toggle="modal" data-target="#myModal" class="btn btn-circle-micro btn-warning"><span class="glyphicon glyphicon-minus"></span></a>
+													{%endif%}
+													<a href="{% url 'store.views.CancelaCompra' pk=post.pk id=user.id  %}" data-toggle="modal" data-target="#myModal" class="btn btn-circle-micro btn-danger"><span class="glyphicon glyphicon-remove"></span> </a>
+												</td>
+											</tr>
+											{% endif %}
+											{% endfor %}
+											{% endfor %}
+											<tr>
+												<td>   </td>
+												<td>   </td>
+												<td>   </td>
+												<td><h5>Subtotal</h5></td>
+												<td class="text-right"><h5><strong>R$ {{subtotal}}</strong></h5></td>
+											</tr>
+											<tr>
+												<td>   </td>
+												<td>   </td>
+												<td>   </td>
+												<td><h5>Frete</h5></td>
+												<td class="text-right"><h5><strong>R$ 12.00</strong></h5></td>
+											</tr>
+											<tr>
+												<td>   </td>
+												<td>   </td>
+												<td>   </td>
+												<td><h3>Total</h3></td>
+												<td class="text-right"><h4><strong>R$ {{total}}</strong></h4></td>
+
+											</tr>
+											<tr>
+												<td>   </td>
+												<td>   </td>
+												<td>   </td>
+												<td>
+													<a href="/home/"><button type="button" class="btn btn-default">
+														<span class="glyphicon glyphicon-shopping-cart" ></span> Adicione mais produtos ao carrinho
+													</button></a></td>
+													<td>
+														<a href="{% url 'store.views.FinalizaCompra' id=user.id %}"><button type="button" class="btn btn-success">
+															Finalizar Compra <span class="glyphicon glyphicon-play"></span>
+														</button></a></td>
+													</tr>
+												</tbody>
+												{%endif%}
+											</table>
 										</div>
 									</div>
-
 								</div>
+
 							</div>
+						</div>
 
-						</body>
+					</body>
 
-						</html>
+					</html>

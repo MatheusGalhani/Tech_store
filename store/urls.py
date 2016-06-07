@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^sobre/$', views.Sobre),
     url(r'^suporte/$', views.Suporte),
     url(r'^compraindisponivel/$', views.CompraIndisponivel),
+    url(r'^add_more/(?P<pk>[0-9]+)/(?P<id>[0-9]+)/$', views.Add),
+    url(r'^minus_more/(?P<pk>[0-9]+)/(?P<id>[0-9]+)/$', views.Minus),
 ]
 
 handler404 = 'views.error404'
