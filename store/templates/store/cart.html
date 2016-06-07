@@ -90,7 +90,6 @@
 					<div class="container-fluid main-container">
 						<div class="col-md-9 content">
 							<div class="panel panel-default">
-								{% if cart %}
 								<table class="table table-condensed table-hover">
 									<thead>
 										<tr>
@@ -104,6 +103,7 @@
 
 									
 									<tbody>
+										{% if cart %}
 										{% for post in posts %}
 										{% for carrinho in cart %}
 										{% if carrinho.produto_compra == post %}
@@ -172,18 +172,15 @@
 														<a href="{% url 'store.views.FinalizaCompra' id=user.id %}"><button type="button" class="btn btn-success">
 															Finalizar Compra <span class="glyphicon glyphicon-play"></span>
 														</button></a></td>
-													</tr>													
+													</tr>
+
+													{%else%}
+														<td colspan="5" align="center">
+																<h4><strong>Nenhum item foi adicionado ao carrinho de compras!</strong></h4>
+															</td>
+													{%endif%}
 												</tbody>
 											</table>
-											{%else%}
-											<div class="error-notice">
-												<div class="oaerror warning">
-													<td colspan="5" align="center">
-														<strong>Atenção</strong> - Nenhum item foi adicionado ao carrinho de compras!
-													</td>
-												</div>
-											</div>
-											{%endif%}
 										</div>
 									</div>
 								</div>
