@@ -1,0 +1,123 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Tech Store</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="{% static 'store/css/store.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/products.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/search.css' %}">
+	<link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+	<link rel="icon" href="/media/icone.png" type="image/x-icon">
+	<link rel="shortcut icon" href="{% static 'store/imagens/favicon.png' %}" type="image/x-icon">
+</head>
+
+
+<body>
+	<div class="visible-desktop">
+		<div class="page-header">
+			<div class="container-fluid">
+				{% if user.is_authenticated %}
+				<form class="navbar-form navbar-top-right" role="form" action="{% url 'store.views.Logout' id=user.id %}">
+					<div class="input-group">
+						<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+							width="60%" height="60%"  /></a>
+
+						</div>
+						<a href="{% url 'store.views.Logout' id=user.id %}"><button class="btn btn-primary  btn-sm btn3d logout">Logout</button></a>
+						
+					</form>
+					{%else%}
+					<form class="navbar-form navbar-top-right" role="form">
+						<div class="input-group">
+							<a href="{% url 'store.views.Home' %}"><img src="{% static 'store/imagens/techStore-sem-imagem-branco.png' %}"
+								width="60%" height="60%"  /></a>
+
+							</div>
+
+						</form>
+						{% endif %}
+					<form class="search-form" method="get" action="{% url 'store.views.Search' %}">
+						<div class="form-group has-feedback">
+							<label for="search" class="sr-only">Search</label>
+							<input type="text" class="form-control" name="search" id="search" placeholder="search">
+							<span class="glyphicon glyphicon-search form-control-feedback"></span>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="wrapper">
+				<div class="cart-icon-top">
+				</div>
+
+				<div class="cart-icon-bottom">
+				</div>
+				<div id="header">	
+					<ul>
+						<li><a href="{% url 'store.views.Home' %}">HOME</a></li>
+						<li><a href="{% url 'store.views.Sobre' %}">SOBRE</a></li>
+						<li><a href="{% url 'store.views.Suporte' %}">SUPORTE</a></li>
+						{% if user.is_authenticated %}
+						<li><a href="{% url 'store.views.Historico' id=user.id %}">MINHAS COMPRAS</a></li>
+						<li><a href="{% url 'store.views.ExibicaoCarrinho' id=user.id %}">MEU CARRINHO</a></li>
+						{% endif %}                                     
+					</ul>		
+				</div>
+				<div id="sidebar">
+					<h3>CATEGORIAS</h3>
+					<div class="checklist categories">
+						<ul>
+							<li><a href="{% url 'store.views.Categories' categoria='cameras' %}"><span></span>Câmeras Digitais</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='desktop' %}"><span></span>Desktop</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='hardware' %}"><span></span>Hardware</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='impressora' %}"><span></span>Impressora</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='notebook' %}"><span></span>Notebook</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='perifericos' %}"><span></span>Periféricos</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='redes' %}"><span></span>Redes</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='smartphone' %}"><span></span>Smartphone</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='software' %}"><span></span>Software</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='tablet' %}"><span></span>Tablet</a></li>
+							<li><a href="{% url 'store.views.Categories' categoria='televisao' %}"><span></span>Televisão</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="container-fluid main-container">
+					<div class="col-md-9 content">
+						<div class="panel panel-default">
+							<table class="table table-bordered table-striped table-condensed table-hover">
+								<thead>
+									<tr>
+										<th>NºPEDIDO</th>
+										<th>PRODUTO</th>
+										<th>QUANTIDADE</th>
+										<th>TOTAL</th>
+										<th>DATA</th>
+										<th>STATUS</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for carrinho in cart %}
+									<tr>
+										<td>{{ carrinho.id_compra }}</td>
+										<td>{{ carrinho.produto_compra }}</td>
+										<td>{{ carrinho.qntd_produtos }}</td>
+										<td>R$ {{carrinho.preco_total}}</td>
+										<td>{{ carrinho.created_date|date:"d/m/Y"  }}</td>
+										<td>{{carrinho.id_status}}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	</html>

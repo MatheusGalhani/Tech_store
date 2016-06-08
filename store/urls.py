@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^cancela_pedido/(?P<pk>[0-9]+)/(?P<id>[0-9]+)/$', views.CancelaCompra),
     url(r'^checkout/(?P<id>[0-9]+)/$', views.FinalizaCompra),
     url(r'^compras_realizadas/(?P<id>[0-9]+)/$', views.Historico),
+    url(r'^pedido_detalhe/(?P<id>[0-9]+)/(?P<pk>\w+)/$', views.Historico_Pedido),
     url(r'^sobre/$', views.Sobre),
     url(r'^suporte/$', views.Suporte),
     url(r'^compraindisponivel/$', views.CompraIndisponivel),

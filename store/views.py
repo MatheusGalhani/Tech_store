@@ -192,6 +192,21 @@ def Minus(request, pk, id):
 @login_required
 def Historico(request, id):
     cart = Carrinho.objects.filter(usuario_compra=id)
+    cart_pedido = []
+    numero_pedido = -99
+    for x in cart:
+        if numero_pedido != x.id_compra:
+            cart_pedido.append(x.id_carrinho)
+            numero_pedido = x.id_compra
+    user = User.objects.get(id=id)
+    cart = Carrinho.objects.filter(id_carrinho__in=cart_pedido)
+    if user.is_staff:
+        return HttpResponseRedirect('/admin')
+    return render(request, "store/historico.html", {'cart':cart})
+
+@login_required
+def Historico_Pedido(request, id, pk):
+    cart = Carrinho.objects.filter(usuario_compra=id, id_compra=pk)
     user = User.objects.get(id=id)
     if user.is_staff:
         return HttpResponseRedirect('/admin')
@@ -204,7 +219,7 @@ def Historico(request, id):
             id = Produto.objects.filter(nome_produto__contains = x)
             listapk.append(id[0].id_produto)
         posts = Produto.objects.filter(id_produto__in = listapk)
-        return render(request, "store/historico.html", {'posts': posts, 'cart':cart})
+        return render(request, "store/historico_pedido.html", {'posts': posts, 'cart':cart})
 
 @login_required
 def ExibicaoCarrinho(request, id):
